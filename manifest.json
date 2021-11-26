@@ -1,0 +1,11 @@
+{
+  "name": "Timers",
+  "id": "1046108969380125350",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "editorType": [
+    "figjam",
+    "figma"
+  ],
+  "ui": "dist/ui.html"
+}
