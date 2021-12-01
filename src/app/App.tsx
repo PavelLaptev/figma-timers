@@ -2,52 +2,34 @@ import * as React from "react";
 import Timer from "./components/Timer";
 // import styles from "./app.module.scss";
 
+console.clear();
+
 const timerConfig = [
   {
     time: {
-      minutes: "00",
-      seconds: "05"
-    }
+      minutes: 0,
+      seconds: 3
+    },
+    play: false
   },
   {
     time: {
-      minutes: "00",
-      seconds: "03"
-    }
+      minutes: 1,
+      seconds: 3
+    },
+    play: false
   },
   {
     time: {
-      minutes: "00",
-      seconds: "34"
-    }
+      minutes: 0,
+      seconds: 2
+    },
+    play: false
   }
 ];
 
 const App = ({}) => {
-  const [playStates, setPlayStates] = React.useState(
-    timerConfig.map(() => false)
-  );
-
-  return (
-    <div>
-      {timerConfig.map((timer, index) => {
-        return (
-          <Timer
-            onComplete={isComplete => {
-              if (isComplete) {
-                const arrayCopy = [...playStates];
-                arrayCopy[index + 1] = isComplete;
-                setPlayStates(arrayCopy);
-              }
-            }}
-            key={`timer-${index}`}
-            time={timer.time}
-            play={playStates[index]}
-          />
-        );
-      })}
-    </div>
-  );
+  return <Timer timerConfig={timerConfig} />;
 };
 
 export default App;
