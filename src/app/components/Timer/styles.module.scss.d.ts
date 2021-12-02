@@ -8,6 +8,7 @@ interface CssExports {
   'draggableWrap': string;
   'dragging': string;
   'timer': string;
+  'timer_label': string;
   'timersList': string;
 }
 export const cssExports: CssExports;

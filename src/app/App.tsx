@@ -6,25 +6,28 @@ console.clear();
 
 const timerConfig = [
   {
-    label: "Intro",
+    name: "Intro",
     time: {
       minutes: 0,
       seconds: 3
-    }
+    },
+    skip: false
   },
   {
-    label: "Goals",
+    name: "Goals",
     time: {
       minutes: 0,
       seconds: 7
-    }
+    },
+    skip: false
   },
   {
-    label: "Sketching",
+    name: "Sketching",
     time: {
       minutes: 0,
       seconds: 2
-    }
+    },
+    skip: false
   }
 ];
 

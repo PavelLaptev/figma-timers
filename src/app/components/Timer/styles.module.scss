@@ -13,6 +13,15 @@
   transition: transform 0.2s ease-in-out, margin 0.1s ease-in-out;
 }
 
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+//////////////////////////////
+////////// DRAGGING //////////
+//////////////////////////////
+
 .draggableWrap {
   position: relative;
   display: flex;
@@ -38,10 +47,14 @@
 
 .dragOver {
   transform: scale(0.95) translateY(8px);
-  // margin: -8px 0 16px;
 }
 
-.disabled {
-  opacity: 0.5;
-  pointer-events: none;
+//////////////////////////////
+//////////////////////////////
+//////////////////////////////
+
+.timer {
+  &_label {
+    display: flex;
+  }
 }

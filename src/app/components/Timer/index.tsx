@@ -14,7 +14,6 @@ const Timers = (mainProps: TimerProps) => {
     mainProps.timerConfig
   );
   const [playState, setPlayState] = React.useState(false);
-  const [draggableState, setDraggableState] = React.useState(true);
   const [nowPlaying, setNowPlaying] = React.useState(0);
 
   const TimerItem = (props: TimerItemProps) => {
@@ -31,16 +30,20 @@ const Timers = (mainProps: TimerProps) => {
         seconds: joinedTime % 60
       };
 
-      // if (newTimeConfig.length < nowPlaying + 1) {
-      //   setPlayState(false);
-      // }
+      // Check if it is the lasat timer
+      if (newTimeConfig.length < nowPlaying + 1) {
+        setPlayState(false);
+      }
 
+      // Chceck if it is playing and run only one timer
       if (playState && nowPlaying === props.index) {
+        // If the tied is over switch to the next timer
         if (!(joinedTime + 1)) {
           setNowPlaying(props.index + 1);
           return;
         }
 
+        // Run the interval for the timer
         const intervalId = setInterval(() => {
           setNewTimeConfig(prevState => {
             const newState = [...prevState];
@@ -56,6 +59,10 @@ const Timers = (mainProps: TimerProps) => {
         };
       }
     }, [newTimeConfig[props.index]]);
+
+    /////////////////////
+    // HANDLE DRAGGING //
+    /////////////////////
 
     const handleDragStart = e => {
       setIsDraggingState(true);
@@ -90,23 +97,38 @@ const Timers = (mainProps: TimerProps) => {
       setNowPlaying(0);
     };
 
+    ///////////////////
+    // HANDLE INPUTS //
+    ///////////////////
+
+    const handlleLabellChange = e => {
+      const newState = [...newTimeConfig];
+      newState[props.index].name = e.target.value;
+      setNewTimeConfig(newState);
+    };
+
     return (
       <section
-        draggable={draggableState}
+        draggable
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={styles.draggableWrap}
-        data-index={props.index}
+        className={`${styles.draggableWrap} ${
+          playState ? styles.disabled : ""
+        }`}
       >
         <div
           className={`${styles.timer} ${dragOverState ? styles.dragOver : ""} ${
             isDraggingState ? styles.dragging : ""
           }`}
         >
-          <h3>{newTimeConfig[props.index].label}</h3>
+          <input
+            className={styles.timer_label}
+            value={newTimeConfig[props.index].name}
+            onChange={handlleLabellChange}
+          />
           <h3>
             {newTimeConfig[props.index].time.minutes}:
             {newTimeConfig[props.index].time.seconds}
@@ -118,12 +140,10 @@ const Timers = (mainProps: TimerProps) => {
 
   const handlePlay = () => {
     setPlayState(true);
-    setDraggableState(false);
   };
 
   const handlePause = () => {
     setPlayState(false);
-    setDraggableState(true);
   };
 
   return (
