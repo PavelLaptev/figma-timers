@@ -20,6 +20,7 @@ declare global {
       minutes: number;
       seconds: number;
     };
+    skip: boolean;
   }
 }
 

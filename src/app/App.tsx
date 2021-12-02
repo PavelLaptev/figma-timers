@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import Timer from "./components/Timer";
 import styles from "./app.module.scss";
 
@@ -29,7 +30,7 @@ const timerConfig = [
     },
     skip: false
   }
-];
+] as Array<TimerConfigProps>;
 
 const App = ({}) => {
   return (
