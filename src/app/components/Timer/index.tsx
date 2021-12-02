@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import styles from "./styles.module.scss";
 
 interface TimerProps {
@@ -12,42 +11,40 @@ interface TimerItemProps {
 
 const Timers = (mainProps: TimerProps) => {
   const [newTimeConfig, setNewTimeConfig] = React.useState(
-    mainProps.timerConfig.map(c => c.time)
+    mainProps.timerConfig
   );
-  const [newPlayConfig, setNewPlayConfig] = React.useState(
-    mainProps.timerConfig.map(c => c.play)
-  );
-
-  console.log("newTimeConfig", newPlayConfig);
+  const [playState, setPlayState] = React.useState(false);
+  const [draggableState, setDraggableState] = React.useState(true);
+  const [nowPlaying, setNowPlaying] = React.useState(0);
 
   const TimerItem = (props: TimerItemProps) => {
+    const [dragOverState, setDragOverState] = React.useState(false);
+    const [isDraggingState, setIsDraggingState] = React.useState(false);
+
     React.useEffect(() => {
       const joinedTime =
-        Number(newTimeConfig[props.index].minutes) * 60 +
-        Number(newTimeConfig[props.index].seconds) -
+        Number(newTimeConfig[props.index].time.minutes) * 60 +
+        Number(newTimeConfig[props.index].time.seconds) -
         1;
       const splittedTime = {
         minutes: Math.floor(joinedTime / 60),
         seconds: joinedTime % 60
       };
 
-      if (newPlayConfig[props.index]) {
+      // if (newTimeConfig.length < nowPlaying + 1) {
+      //   setPlayState(false);
+      // }
+
+      if (playState && nowPlaying === props.index) {
         if (!(joinedTime + 1)) {
-          if (mainProps.timerConfig[props.index + 1]) {
-            setNewPlayConfig(() => {
-              console.log(`Der timer ${props.index} ist vorbei`);
-              const newState = mainProps.timerConfig.map(_ => false);
-              newState[props.index + 1] = true;
-              return newState;
-            });
-          }
+          setNowPlaying(props.index + 1);
           return;
         }
 
         const intervalId = setInterval(() => {
           setNewTimeConfig(prevState => {
             const newState = [...prevState];
-            newState[props.index] = splittedTime;
+            newState[props.index].time = splittedTime;
             return newState;
           });
 
@@ -60,62 +57,86 @@ const Timers = (mainProps: TimerProps) => {
       }
     }, [newTimeConfig[props.index]]);
 
-    const isButtonsDisabled = () => {
-      if (
-        !(
-          newTimeConfig[props.index].minutes +
-          newTimeConfig[props.index].seconds
-        )
-      ) {
-        return true;
-      }
-
-      if (
-        newPlayConfig.includes(true) &&
-        newPlayConfig.indexOf(true) !== props.index
-      ) {
-        return true;
-      }
-
-      return false;
+    const handleDragStart = e => {
+      setIsDraggingState(true);
+      e.dataTransfer.setData("index", props.index);
     };
 
-    const handlePlay = () => {
-      setNewPlayConfig(prevState => {
-        const newState = [...prevState];
-        newState[props.index] = true;
-        return newState;
-      });
+    const handleDragEnd = () => {
+      setIsDraggingState(false);
     };
 
-    const handlePause = () => {
-      setNewPlayConfig(prevState => {
+    const handleDragOver = e => {
+      e.preventDefault();
+      setDragOverState(true);
+    };
+
+    const handleDragLeave = () => {
+      setDragOverState(false);
+    };
+
+    const handleDrop = e => {
+      setDragOverState(false);
+      const draggedIndex = Number(e.dataTransfer.getData("index"));
+
+      setNewTimeConfig(prevState => {
         const newState = [...prevState];
-        newState[props.index] = false;
+        const draggedItem = newState[draggedIndex];
+        newState.splice(draggedIndex, 1);
+        newState.splice(props.index, 0, draggedItem);
         return newState;
       });
+
+      setNowPlaying(0);
     };
 
     return (
-      <div>
-        <h2>{props.index}</h2>
-        <h3>
-          {newTimeConfig[props.index].minutes}:
-          {newTimeConfig[props.index].seconds}
-        </h3>
-        <section className={isButtonsDisabled() ? styles.disabled : ""}>
-          <button onClick={handlePlay}>Play</button>
-          <button onClick={handlePause}>Pause</button>
-        </section>
-      </div>
+      <section
+        draggable={draggableState}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        className={styles.draggableWrap}
+        data-index={props.index}
+      >
+        <div
+          className={`${styles.timer} ${dragOverState ? styles.dragOver : ""} ${
+            isDraggingState ? styles.dragging : ""
+          }`}
+        >
+          <h3>{newTimeConfig[props.index].label}</h3>
+          <h3>
+            {newTimeConfig[props.index].time.minutes}:
+            {newTimeConfig[props.index].time.seconds}
+          </h3>
+        </div>
+      </section>
     );
+  };
+
+  const handlePlay = () => {
+    setPlayState(true);
+    setDraggableState(false);
+  };
+
+  const handlePause = () => {
+    setPlayState(false);
+    setDraggableState(true);
   };
 
   return (
     <div>
-      {mainProps.timerConfig.map((_, index) => {
-        return <TimerItem index={index} key={`timer-${index}`} />;
-      })}
+      <section className={""}>
+        <button onClick={handlePlay}>Play</button>
+        <button onClick={handlePause}>Pause</button>
+      </section>
+      <section className={styles.timersList}>
+        {mainProps.timerConfig.map((_, index) => {
+          return <TimerItem index={index} key={`timer-${index}`} />;
+        })}
+      </section>
     </div>
   );
 };

@@ -1,35 +1,39 @@
 import * as React from "react";
 import Timer from "./components/Timer";
-// import styles from "./app.module.scss";
+import styles from "./app.module.scss";
 
 console.clear();
 
 const timerConfig = [
   {
+    label: "Intro",
     time: {
       minutes: 0,
       seconds: 3
-    },
-    play: false
+    }
   },
   {
+    label: "Goals",
     time: {
-      minutes: 1,
-      seconds: 3
-    },
-    play: false
+      minutes: 0,
+      seconds: 7
+    }
   },
   {
+    label: "Sketching",
     time: {
       minutes: 0,
       seconds: 2
-    },
-    play: false
+    }
   }
 ];
 
 const App = ({}) => {
-  return <Timer timerConfig={timerConfig} />;
+  return (
+    <section className={styles.app}>
+      <Timer timerConfig={timerConfig} />
+    </section>
+  );
 };
 
 export default App;

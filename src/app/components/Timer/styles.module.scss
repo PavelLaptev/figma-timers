@@ -1,3 +1,46 @@
+.timersList {
+  display: flex;
+  flex-direction: column;
+}
+
+.timer {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid #ccc;
+  background: white;
+  margin: 8px 0;
+  transition: transform 0.2s ease-in-out, margin 0.1s ease-in-out;
+}
+
+.draggableWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.dragPlaceholder {
+  position: absolute;
+  left: 0;
+  bottom: 6px;
+  display: none;
+  height: 4px;
+  width: 100%;
+  background-color: aquamarine;
+  &_show {
+    display: block;
+  }
+}
+
+.dragging {
+  opacity: 1;
+}
+
+.dragOver {
+  transform: scale(0.95) translateY(8px);
+  // margin: -8px 0 16px;
+}
+
 .disabled {
   opacity: 0.5;
   pointer-events: none;

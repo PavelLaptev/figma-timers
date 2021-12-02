@@ -15,11 +15,11 @@ declare module "*.svg" {
 
 declare global {
   interface TimerConfigProps {
+    label: string;
     time: {
       minutes: number;
       seconds: number;
     };
-    play: boolean;
   }
 }
 
