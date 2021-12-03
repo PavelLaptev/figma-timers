@@ -1,7 +1,8 @@
 import * as React from "react";
 import useStore from "./useStore";
-
 import styles from "./app.module.scss";
+
+import Timer from "./components/Timer";
 
 console.clear();
 
@@ -25,7 +26,7 @@ const App = ({}) => {
       </section>
       <section className={styles.timersList}>
         {config.map((_, index) => {
-          return <div>{index}</div>;
+          return <Timer key={`timer-${index}`} index={index} />;
         })}
       </section>
     </div>
