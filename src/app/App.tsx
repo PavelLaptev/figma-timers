@@ -1,18 +1,11 @@
 import * as React from "react";
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue
-} from "recoil";
+import { atom, useRecoilValue, useRecoilState } from "recoil";
 
-import Timer from "./components/Timer";
 import styles from "./app.module.scss";
 
 console.clear();
 
-const config = atom({
+const configAtom = atom({
   key: "config", // unique ID (with respect to other atoms/selectors)
   default: [
     {
@@ -42,29 +35,37 @@ const config = atom({
   ] as Array<TimerConfigProps> // default value (aka initial value)
 });
 
+const playStateAtom = atom({
+  key: "playStateAtom",
+  default: false
+});
+
 const App = ({}) => {
+  const [playState, setPlayState] = useRecoilState(playStateAtom);
+  // const [nowPlaying, setNowPlaying] = useRecoilState(0);
+  const [config] = useRecoilState(configAtom);
+
   const handlePlay = () => {
-    // setPlayState(true);
+    setPlayState(true);
   };
 
   const handlePause = () => {
-    // setPlayState(false);
+    setPlayState(false);
   };
 
   return (
-    <RecoilRoot>
-      <div>
-        <section className={styles.app}>
-          <button onClick={handlePlay}>Play</button>
-          <button onClick={handlePause}>Pause</button>
-        </section>
-        <section className={styles.timersList}>
-          {/* {mainProps.timerConfig.map((_, index) => {
-          return <TimerItem index={index} key={`timer-${index}`} />;
-        })} */}
-        </section>
-      </div>
-    </RecoilRoot>
+    <div>
+      <div>{playState}</div>
+      <section className={styles.app}>
+        <button onClick={handlePlay}>Play</button>
+        <button onClick={handlePause}>Pause</button>
+      </section>
+      <section className={styles.timersList}>
+        {config.map((_, index) => {
+          <div>{index}</div>;
+        })}
+      </section>
+    </div>
   );
 };
 
