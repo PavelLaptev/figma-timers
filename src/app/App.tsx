@@ -7,15 +7,14 @@ import Timer from "./components/Timer";
 console.clear();
 
 const App = ({}) => {
-  const config = useStore.getState().config;
-  console.log(config);
+  const { config, setIsPlaying } = useStore();
 
   const handlePlay = () => {
-    useStore.setState({ isPlaying: true });
+    setIsPlaying(true);
   };
 
   const handlePause = () => {
-    useStore.setState({ isPlaying: false });
+    setIsPlaying(false);
   };
 
   return (
