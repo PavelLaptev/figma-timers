@@ -18,8 +18,8 @@ const App = ({}) => {
   };
 
   return (
-    <div>
-      <section className={styles.app}>
+    <div className={`${styles.darkTheme} ${styles.app}`}>
+      <section>
         <button onClick={handlePlay}>Play</button>
         <button onClick={handlePause}>Pause</button>
       </section>
