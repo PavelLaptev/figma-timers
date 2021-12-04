@@ -1,17 +1,33 @@
 .darkTheme {
-  --black-clr: #000000;
+  --accent-ckr: #ff5050;
+
+  --black-clr: #1b1b1b;
   --white-clr: #ffffff;
 
-  --neutral-dark-clr: #171717;
-  --neutral-middle-clr: #272727;
-  --neutral-semilight-clr: #343434;
-  --neutral-light-clr: #4e4e4e;
+  --neutral-dark-clr: #343434;
+  --neutral-middle-clr: #424242;
 }
 
 .app {
   position: relative;
-  padding: 16px;
-  background-color: var(--neutral-middle-clr);
+  padding: 20px 16px;
+  background-color: var(--neutral-dark-clr);
+}
+
+.generalButtons {
+  display: flex;
+  margin-bottom: 20px;
+  button {
+    width: 44px;
+    margin-right: 8px;
+    &:first-child {
+      width: 100%;
+      flex: 1;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 }
 
 .timersList {

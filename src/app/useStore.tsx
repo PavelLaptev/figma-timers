@@ -31,10 +31,10 @@ const useStore = create<any>(set => ({
     set(state => (state.config[state.nowPlaying].time = time)),
   setConfigName: name =>
     set(state => (state.config[state.nowPlaying].name = name)),
-  setConfigMinutes: minutes =>
-    set(state => (state.config[state.nowPlaying].time.minutes = minutes)),
-  setConfigSeconds: seconds =>
-    set(state => (state.config[state.nowPlaying].time.seconds = seconds)),
+  setConfigMinutes: (minutes, index) =>
+    set(state => (state.config[index].time.minutes = minutes)),
+  setConfigSeconds: (seconds, index) =>
+    set(state => (state.config[index].time.seconds = seconds)),
   nowPlaying: 0,
   setNowPlaying: (index: number) => set(() => ({ nowPlaying: index })),
   isPlaying: false,

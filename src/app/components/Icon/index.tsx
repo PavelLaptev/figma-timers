@@ -5,20 +5,21 @@ import icons from "./icons";
 
 interface Props {
   className?: any;
-  name: string;
+  name: IconTypes;
 }
 
 const Icon: React.FunctionComponent<Props> = props => {
   return (
     <i className={`${props.className} ${styles.icon}`}>
       <svg
-        width="20"
-        height="20"
-        viewBox="0 0 20 20"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
         fill="none"
+        fillRule="evenodd"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {icons[props.name]}
+        <path d={icons[props.name]} fill="var(--white-clr)" />
       </svg>
     </i>
   );

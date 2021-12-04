@@ -2,14 +2,8 @@
 // Please do not change this file!
 interface CssExports {
   'disabled': string;
-  'dragOver': string;
-  'dragPlaceholder': string;
-  'dragPlaceholder_show': string;
-  'draggableWrap': string;
-  'dragging': string;
+  'time': string;
   'timer': string;
-  'timer_name': string;
-  'timersList': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

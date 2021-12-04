@@ -2,26 +2,34 @@ import * as React from "react";
 import useStore from "./useStore";
 import styles from "./app.module.scss";
 
+import Button from "./components/Button";
+
 import Timer from "./components/Timer";
 
 console.clear();
 
 const App = ({}) => {
-  const { config, setIsPlaying } = useStore();
+  const { config, isPlaying, setIsPlaying } = useStore();
 
   const handlePlay = () => {
-    setIsPlaying(true);
+    setIsPlaying(!isPlaying);
   };
 
   const handlePause = () => {
-    setIsPlaying(false);
+    setIsPlaying(!isPlaying);
   };
 
   return (
     <div className={`${styles.darkTheme} ${styles.app}`}>
-      <section>
-        <button onClick={handlePlay}>Play</button>
-        <button onClick={handlePause}>Pause</button>
+      <section className={styles.generalButtons}>
+        <Button
+          onClick={handlePlay}
+          icon={isPlaying ? "pause" : "play"}
+          size="large"
+        />
+        <Button onClick={handlePause} icon="reset" size="large" />
+        <Button onClick={handlePause} icon="mute" size="large" />
+        <Button onClick={handlePause} icon="fold" size="large" />
       </section>
       <section className={styles.timersList}>
         {config.map((_, index) => {

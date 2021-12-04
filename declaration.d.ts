@@ -22,6 +22,17 @@ declare global {
     };
     skip: boolean;
   }
+  type IconTypes =
+    | "play"
+    | "pause"
+    | "bin"
+    | "plus"
+    | "plus-small"
+    | "reset"
+    | "minus"
+    | "grab"
+    | "mute"
+    | "fold";
 }
 
 export {};

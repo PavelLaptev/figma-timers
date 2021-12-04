@@ -3,6 +3,7 @@
 interface CssExports {
   'app': string;
   'darkTheme': string;
+  'generalButtons': string;
   'timersList': string;
 }
 export const cssExports: CssExports;
