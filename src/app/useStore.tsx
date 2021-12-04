@@ -1,42 +1,27 @@
 import create from "zustand";
 
 const useStore = create<any>(set => ({
-  config: [
-    {
-      name: "Intro",
-      time: {
-        minutes: 0,
-        seconds: 3
-      },
-      skip: false
-    },
-    {
-      name: "Goals",
-      time: {
-        minutes: 0,
-        seconds: 7
-      },
-      skip: false
-    },
-    {
-      name: "Sketching",
-      time: {
-        minutes: 0,
-        seconds: 2
-      },
-      skip: false
-    }
-  ] as Array<TimerConfigProps>,
+  config: null,
+
+  setConfig: (config: ConfigProps) => set(state => ({ ...state, config })),
+  resetTimers: (timers: Array<TimerConfigProps>) =>
+    set(state => {
+      state.nowPlaying = 0;
+      state.config.timers.forEach((timer, i) => (timer.time = timers[i].time));
+    }),
+
   setConfigTime: time =>
-    set(state => (state.config[state.nowPlaying].time = time)),
+    set(state => (state.config.timers[state.nowPlaying].time = time)),
   setConfigName: name =>
-    set(state => (state.config[state.nowPlaying].name = name)),
+    set(state => (state.config.timers[state.nowPlaying].name = name)),
   setConfigMinutes: (minutes, index) =>
-    set(state => (state.config[index].time.minutes = minutes)),
+    set(state => (state.config.timers[index].time.minutes = minutes)),
   setConfigSeconds: (seconds, index) =>
-    set(state => (state.config[index].time.seconds = seconds)),
+    set(state => (state.config.timers[index].time.seconds = seconds)),
+
   nowPlaying: 0,
   setNowPlaying: (index: number) => set(() => ({ nowPlaying: index })),
+
   isPlaying: false,
   setIsPlaying: (val: boolean) => set(() => ({ isPlaying: val }))
 }));

@@ -21,20 +21,20 @@ const Timer = (props: TimerItemProps) => {
 
   React.useEffect(() => {
     const joinedTime =
-      Number(config[props.index].time.minutes) * 60 +
-      Number(config[props.index].time.seconds);
+      Number(config.timers[props.index].time.minutes) * 60 +
+      Number(config.timers[props.index].time.seconds);
     const joinedTimeMinusSecond = joinedTime - 1;
     const splittedTime = {
       minutes: Math.floor(joinedTimeMinusSecond / 60),
       seconds: joinedTimeMinusSecond % 60
     };
-    const totalTime = config.reduce(
+    const totalTime = config.timers.reduce(
       (acc, cur) => acc + (cur.time.minutes + cur.time.seconds),
       0
     );
 
     // Check if it is the lasat timer
-    if (config.length < nowPlaying + 1) setIsPlaying(false);
+    if (config.timers.length < nowPlaying + 1) setIsPlaying(false);
 
     // if total time sum is 0, stop timer
     if (totalTime === 0) setIsPlaying(false);
@@ -60,7 +60,8 @@ const Timer = (props: TimerItemProps) => {
       };
     }
   }, [
-    config[props.index].time,
+    config,
+    config.timers[props.index].time,
     isPlaying,
     nowPlaying,
     setNowPlaying,
@@ -89,17 +90,17 @@ const Timer = (props: TimerItemProps) => {
       <div className={`${styles.timer}`}>
         <input
           onChange={handleNameChange}
-          value={config[props.index].name}
+          value={config.timers[props.index].name}
         ></input>
         <div className={styles.time}>
           <input
             onChange={handleMinutesChange}
-            value={config[props.index].time.minutes}
+            value={config.timers[props.index].time.minutes}
           />
           <span>:</span>
           <input
             onChange={handleSecondsChange}
-            value={config[props.index].time.seconds}
+            value={config.timers[props.index].time.seconds}
           />
         </div>
       </div>

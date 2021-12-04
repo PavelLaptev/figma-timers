@@ -22,6 +22,11 @@ declare global {
     };
     skip: boolean;
   }
+  interface ConfigProps {
+    name: string;
+    sound: boolean;
+    timers: Array<TimerConfigProps>;
+  }
   type IconTypes =
     | "play"
     | "pause"
