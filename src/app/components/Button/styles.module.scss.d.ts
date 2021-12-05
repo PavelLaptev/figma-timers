@@ -2,9 +2,12 @@
 // Please do not change this file!
 interface CssExports {
   'button': string;
+  'fileInput': string;
   'large': string;
   'medium': string;
+  'small': string;
   'text': string;
+  'wrap': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

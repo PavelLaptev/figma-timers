@@ -14,9 +14,40 @@
   background-color: var(--neutral-dark-clr);
 }
 
+.header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 22px;
+  &_title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  &_buttons {
+    display: flex;
+    margin-left: 20px;
+  }
+  button {
+    margin-left: 4px;
+  }
+  h1 {
+    font-size: 18px;
+    line-height: 130%;
+    color: var(--white-clr);
+    margin: 0;
+  }
+  p {
+    font-size: 14px;
+    line-height: 152%;
+    color: var(--white-clr);
+    opacity: 0.7;
+    margin: 0;
+  }
+}
+
 .generalButtons {
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   button {
     width: 44px;
     margin-right: 8px;

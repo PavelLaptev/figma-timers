@@ -12,12 +12,12 @@ const useStore = create<any>(set => ({
 
   setConfigTime: time =>
     set(state => (state.config.timers[state.nowPlaying].time = time)),
-  setConfigName: name =>
-    set(state => (state.config.timers[state.nowPlaying].name = name)),
+  setConfigName: (name, index) =>
+    set(state => (state.config.timers[index].name = name)),
   setConfigMinutes: (minutes, index) =>
-    set(state => (state.config.timers[index].time.minutes = minutes)),
+    set(state => (state.config.timers[index].time.minutes = Number(minutes))),
   setConfigSeconds: (seconds, index) =>
-    set(state => (state.config.timers[index].time.seconds = seconds)),
+    set(state => (state.config.timers[index].time.seconds = Number(seconds))),
 
   nowPlaying: 0,
   setNowPlaying: (index: number) => set(() => ({ nowPlaying: index })),

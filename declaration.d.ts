@@ -24,6 +24,7 @@ declare global {
   }
   interface ConfigProps {
     name: string;
+    description: string;
     sound: boolean;
     timers: Array<TimerConfigProps>;
   }
@@ -37,6 +38,9 @@ declare global {
     | "minus"
     | "grab"
     | "mute"
+    | "load"
+    | "save"
+    | "explore"
     | "fold";
 }
 

@@ -3,14 +3,15 @@ import useStore from "./useStore";
 import styles from "./app.module.scss";
 
 import Button from "./components/Button";
-
 import Timer from "./components/Timer";
 
 console.clear();
 
 const App = ({}) => {
   const [initialConfig, setInitialConfig] = React.useState({
-    name: "Interview",
+    name: "UX Whiteboard Challange Interview",
+    description:
+      "Ask questions to specify the challenge. Ask about the users and their context. Write down the main steps of the story.",
     sound: false,
     timers: [
       {
@@ -53,16 +54,56 @@ const App = ({}) => {
   };
 
   const handleReset = () => {
-    console.log(initialConfig.timers[0].time);
     resetTimers(initialConfig.timers);
+  };
+
+  const handleFileUpload = file => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const config = JSON.parse(reader.result as string);
+      console.log(config);
+      setInitialConfig(config);
+    };
+    reader.readAsText(file);
   };
 
   React.useEffect(() => {
     setConfig(configDeepCopy);
-  }, []);
+  }, [initialConfig]);
 
-  return (
+  return config ? (
     <div className={`${styles.darkTheme} ${styles.app}`}>
+      <section className={styles.header}>
+        <div className={styles.header_title}>
+          <h1>{config.name}</h1>
+          <div className={styles.header_buttons}>
+            <Button
+              icon={"save"}
+              size="small"
+              type="download"
+              file={{
+                content: config,
+                name: config.name
+              }}
+            />
+            <Button
+              type="upload"
+              icon={"load"}
+              size="small"
+              onFileUpload={handleFileUpload}
+            />
+
+            <Button
+              onClick={() => {
+                console.log("dummy");
+              }}
+              icon={"explore"}
+              size="small"
+            />
+          </div>
+        </div>
+        <p>{config.description}</p>
+      </section>
       <section className={styles.generalButtons}>
         <Button
           onClick={handlePlay}
@@ -86,15 +127,13 @@ const App = ({}) => {
         />
       </section>
       <section className={styles.timersList}>
-        {config ? (
-          config.timers.map((_, index) => {
-            return <Timer key={`timer-${index}`} index={index} />;
-          })
-        ) : (
-          <div>Config is miissing</div>
-        )}
+        {config.timers.map((_, index) => {
+          return <Timer key={`timer-${index}`} index={index} />;
+        })}
       </section>
     </div>
+  ) : (
+    <div>Loading...</div>
   );
 };
 

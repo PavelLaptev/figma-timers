@@ -3,4 +3,4 @@
 ////////////////////////////////////////////////////////////////
 
 // Show UI
-figma.showUI(__html__, { width: 350, height: 600 });
+figma.showUI(__html__, { width: 360, height: 600 });

@@ -1,3 +1,22 @@
+.wrap {
+  position: relative;
+  display: flex;
+}
+
+.fileInput {
+  position: absolute;
+  top: -500px;
+  left: -500px;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  &:hover {
+    .button {
+      background-color: var(--neutral-middle-clr);
+    }
+  }
+}
+
 .button {
   position: relative;
   display: flex;
@@ -24,6 +43,10 @@
 }
 .medium {
   height: 40px;
+}
+.small {
+  padding: 0;
+  height: 24px;
 }
 
 .text {

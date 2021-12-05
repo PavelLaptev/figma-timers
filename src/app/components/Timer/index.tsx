@@ -71,7 +71,7 @@ const Timer = (props: TimerItemProps) => {
   ]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfigName(e.target.value);
+    setConfigName(e.target.value, props.index);
   };
 
   const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {

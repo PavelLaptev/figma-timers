@@ -4,6 +4,9 @@ interface CssExports {
   'app': string;
   'darkTheme': string;
   'generalButtons': string;
+  'header': string;
+  'header_buttons': string;
+  'header_title': string;
   'timersList': string;
 }
 export const cssExports: CssExports;
