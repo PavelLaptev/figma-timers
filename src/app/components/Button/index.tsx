@@ -49,6 +49,7 @@ const Button: React.FunctionComponent<Props> = props => {
 
   const handleFileUpload = e => {
     props.onFileUpload(e.target.files[0]);
+    e.target.value = null;
   };
 
   return props.type !== "upload" ? (

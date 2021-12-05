@@ -40,7 +40,7 @@ const App = ({}) => {
       }
     ]
   } as ConfigProps);
-  const configDeepCopy = JSON.parse(JSON.stringify(initialConfig));
+
   const {
     config,
     isPlaying,
@@ -61,13 +61,14 @@ const App = ({}) => {
     const reader = new FileReader();
     reader.onload = () => {
       const config = JSON.parse(reader.result as string);
-      console.log(config);
+      console.log("uploaded config: ", config);
       setInitialConfig(config);
     };
     reader.readAsText(file);
   };
 
   React.useEffect(() => {
+    const configDeepCopy = JSON.parse(JSON.stringify(initialConfig));
     setConfig(configDeepCopy);
   }, [initialConfig]);
 
