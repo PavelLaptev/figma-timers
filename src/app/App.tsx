@@ -2,6 +2,7 @@ import * as React from "react";
 import useStore from "./useStore";
 import styles from "./app.module.scss";
 
+import writeToStorage from "./utils/writeToStorage";
 import Button from "./components/Button";
 import Timer from "./components/Timer";
 
@@ -46,15 +47,30 @@ const App = ({}) => {
     isPlaying,
     setIsPlaying,
     setConfig,
-    resetTimers
+    resetTimers,
+    setConfigName,
+    setConfigDescription
   } = useStore();
 
   const handlePlay = () => {
     setIsPlaying(!isPlaying);
+    writeToStorage(config);
   };
 
   const handleReset = () => {
     resetTimers(initialConfig.timers);
+    writeToStorage(initialConfig);
+  };
+
+  const haandleNameChange = e => {
+    console.log(e.target.innerText);
+    setConfigName(e.target.innerText);
+    writeToStorage(config);
+  };
+
+  const haandleDescriptionChange = e => {
+    setConfigDescription(e.target.innerText);
+    writeToStorage(config);
   };
 
   const handleFileUpload = file => {
@@ -68,15 +84,28 @@ const App = ({}) => {
   };
 
   React.useEffect(() => {
+    onmessage = event => {
+      if (event.data.pluginMessage.data) {
+        setConfig(event.data.pluginMessage.data);
+      }
+    };
+
     const configDeepCopy = JSON.parse(JSON.stringify(initialConfig));
     setConfig(configDeepCopy);
+    writeToStorage(configDeepCopy);
   }, [initialConfig]);
 
   return config ? (
     <div className={`${styles.darkTheme} ${styles.app}`}>
       <section className={styles.header}>
         <div className={styles.header_title}>
-          <h1>{config.name}</h1>
+          <h1
+            contentEditable
+            suppressContentEditableWarning
+            onInput={haandleNameChange}
+          >
+            {initialConfig.name}
+          </h1>
           <div className={styles.header_buttons}>
             <Button
               icon={"save"}
@@ -103,7 +132,13 @@ const App = ({}) => {
             />
           </div>
         </div>
-        <p>{config.description}</p>
+        <p
+          contentEditable
+          suppressContentEditableWarning
+          onInput={haandleDescriptionChange}
+        >
+          {initialConfig.description}
+        </p>
       </section>
       <section className={styles.generalButtons}>
         <Button

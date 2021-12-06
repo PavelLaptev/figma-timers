@@ -10,9 +10,13 @@ const useStore = create<any>(set => ({
       state.config.timers.forEach((timer, i) => (timer.time = timers[i].time));
     }),
 
+  setConfigName: name => set(state => (state.config.name = name)),
+  setConfigDescription: description =>
+    set(state => (state.config.description = description)),
+
   setConfigTime: time =>
     set(state => (state.config.timers[state.nowPlaying].time = time)),
-  setConfigName: (name, index) =>
+  setConfigTimerName: (name, index) =>
     set(state => (state.config.timers[index].name = name)),
   setConfigMinutes: (minutes, index) =>
     set(state => (state.config.timers[index].time.minutes = Number(minutes))),

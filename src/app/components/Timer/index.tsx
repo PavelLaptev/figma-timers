@@ -16,7 +16,7 @@ const Timer = (props: TimerItemProps) => {
     setConfigTime,
     setConfigMinutes,
     setConfigSeconds,
-    setConfigName
+    setConfigTimerName
   } = useStore();
 
   React.useEffect(() => {
@@ -71,7 +71,7 @@ const Timer = (props: TimerItemProps) => {
   ]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfigName(e.target.value, props.index);
+    setConfigTimerName(e.target.value, props.index);
   };
 
   const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
