@@ -3,44 +3,14 @@ import useStore from "./useStore";
 import styles from "./app.module.scss";
 
 import writeToStorage from "./utils/writeToStorage";
+import Explore from "./components/Explore";
 import Button from "./components/Button";
 import Timer from "./components/Timer";
 
 console.clear();
 
 const App = ({}) => {
-  const [initialConfig, setInitialConfig] = React.useState({
-    name: "UX Whiteboard Challange Interview",
-    description:
-      "Ask questions to specify the challenge. Ask about the users and their context. Write down the main steps of the story.",
-    sound: false,
-    timers: [
-      {
-        name: "Intro",
-        time: {
-          minutes: 0,
-          seconds: 3
-        },
-        skip: false
-      },
-      {
-        name: "Goals",
-        time: {
-          minutes: 0,
-          seconds: 7
-        },
-        skip: false
-      },
-      {
-        name: "Sketching",
-        time: {
-          minutes: 0,
-          seconds: 2
-        },
-        skip: false
-      }
-    ]
-  } as ConfigProps);
+  const [initialConfig, setInitialConfig] = React.useState(null);
 
   const {
     config,
@@ -79,13 +49,30 @@ const App = ({}) => {
       const config = JSON.parse(reader.result as string);
       console.log("uploaded config: ", config);
       setInitialConfig(config);
+      writeToStorage(config);
     };
     reader.readAsText(file);
   };
 
+  const handleTemplateChoice = template => {
+    console.log("template choice: ", template);
+    setInitialConfig(template);
+    setConfig(template);
+    writeToStorage(template);
+  };
+
+  const handleSave = () => {
+    writeToStorage(config);
+    setInitialConfig(JSON.parse(JSON.stringify(config)));
+  };
+
   React.useEffect(() => {
     onmessage = event => {
+      console.log(event.data);
       if (event.data.pluginMessage.data) {
+        setInitialConfig(
+          JSON.parse(JSON.stringify(event.data.pluginMessage.data))
+        );
         setConfig(event.data.pluginMessage.data);
       }
     };
@@ -95,7 +82,7 @@ const App = ({}) => {
     writeToStorage(configDeepCopy);
   }, [initialConfig]);
 
-  return config ? (
+  return initialConfig && config ? (
     <div className={`${styles.darkTheme} ${styles.app}`}>
       <section className={styles.header}>
         <div className={styles.header_title}>
@@ -115,6 +102,7 @@ const App = ({}) => {
                 content: config,
                 name: config.name
               }}
+              onClick={handleSave}
             />
             <Button
               type="upload"
@@ -169,7 +157,7 @@ const App = ({}) => {
       </section>
     </div>
   ) : (
-    <div>Loading...</div>
+    <Explore onClick={handleTemplateChoice} />
   );
 };
 

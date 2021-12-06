@@ -1,4 +1,5 @@
 import * as React from "react";
+import writeToStorage from "../../utils/writeToStorage";
 import useStore from "../../useStore";
 import styles from "./styles.module.scss";
 
@@ -72,16 +73,19 @@ const Timer = (props: TimerItemProps) => {
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfigTimerName(e.target.value, props.index);
+    writeToStorage(config);
   };
 
   const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNowPlaying(0);
     setConfigMinutes(e.target.value, props.index);
+    writeToStorage(config);
   };
 
   const handleSecondsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNowPlaying(0);
     setConfigSeconds(e.target.value, props.index);
+    writeToStorage(config);
   };
 
   return (

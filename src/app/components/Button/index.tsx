@@ -41,6 +41,7 @@ const Button: React.FunctionComponent<Props> = props => {
     }
     if (props.type === "upload") {
       inputRef.current.click();
+      props.onClick(e);
     }
     if (props.onClick) {
       props.onClick(e);
