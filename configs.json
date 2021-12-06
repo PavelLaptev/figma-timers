@@ -1,0 +1,72 @@
+[
+  {
+    "name": "UX Whiteboard Challange Interview",
+    "description": "Ask questions to specify the challenge. Ask about the users and their context. Write down the main steps of the story.",
+    "sound": false,
+    "timers": [
+      {
+        "name": "Intro",
+        "time": {
+          "minutes": 0,
+          "seconds": 3
+        },
+        "skip": false
+      },
+      {
+        "name": "Goals",
+        "time": {
+          "minutes": 0,
+          "seconds": 7
+        },
+        "skip": false
+      },
+      {
+        "name": "Sketching",
+        "time": {
+          "minutes": 0,
+          "seconds": 2
+        },
+        "skip": false
+      }
+    ]
+  },
+  {
+    "name": "Pomodoro",
+    "description": "Ask questions to specify the challenge. Ask about the users and their context. Write down the main steps of the story.",
+    "sound": false,
+    "timers": [
+      {
+        "name": "Work",
+        "time": {
+          "minutes": 25,
+          "seconds": 0
+        },
+        "skip": false
+      },
+      {
+        "name": "Break",
+        "time": {
+          "minutes": 5,
+          "seconds": 0
+        },
+        "skip": false
+      },
+      {
+        "name": "Work",
+        "time": {
+          "minutes": 25,
+          "seconds": 0
+        },
+        "skip": false
+      },
+      {
+        "name": "Break",
+        "time": {
+          "minutes": 5,
+          "seconds": 0
+        },
+        "skip": false
+      }
+    ]
+  }
+]
