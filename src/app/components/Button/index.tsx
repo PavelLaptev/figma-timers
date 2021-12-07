@@ -10,6 +10,7 @@ interface Props {
   icon?: IconTypes;
   type?: "default" | "download" | "upload";
   size?: "large" | "medium" | "small";
+  noHeight?: boolean;
   file?: {
     content: string;
     name: string;
@@ -56,13 +57,15 @@ const Button: React.FunctionComponent<Props> = props => {
   return props.type !== "upload" ? (
     <button
       onClick={handleClick}
-      className={`${styles.button} ${props.className} ${styles[props.size]}`}
+      className={`${styles.button} ${props.className} ${styles[props.size]} ${
+        props.noHeight ? styles.noHeight : ""
+      }`}
     >
       <BtnIcon />
       <Text />
     </button>
   ) : (
-    <div className={`${styles.wrap} ${props.className}`}>
+    <div className={`${styles.wrap} ${props.className} ${styles[props.size]}`}>
       <input
         type="file"
         onChange={handleFileUpload}
@@ -83,7 +86,8 @@ const Button: React.FunctionComponent<Props> = props => {
 Button.defaultProps = {
   className: "",
   type: "default",
-  size: "medium"
+  size: "medium",
+  noHeight: false
 } as Partial<Props>;
 
 export default Button;

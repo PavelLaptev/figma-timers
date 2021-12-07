@@ -5,6 +5,7 @@ interface CssExports {
   'fileInput': string;
   'large': string;
   'medium': string;
+  'noHeight': string;
   'small': string;
   'text': string;
   'wrap': string;

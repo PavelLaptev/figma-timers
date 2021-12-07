@@ -6,6 +6,8 @@ interface CssExports {
   'generalButtons': string;
   'header': string;
   'header_buttons': string;
+  'header_dropdown': string;
+  'header_dropdownWrap': string;
   'header_title': string;
   'timersList': string;
 }

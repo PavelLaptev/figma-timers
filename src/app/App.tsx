@@ -3,14 +3,45 @@ import useStore from "./useStore";
 import styles from "./app.module.scss";
 
 import writeToStorage from "./utils/writeToStorage";
-import Explore from "./components/Explore";
+
+import ExploreDropdown from "./components/ExploreDropdown";
 import Button from "./components/Button";
 import Timer from "./components/Timer";
 
 console.clear();
 
 const App = ({}) => {
-  const [initialConfig, setInitialConfig] = React.useState(null);
+  const [initialConfig, setInitialConfig] = React.useState({
+    name: `Hello there 👋🏾 Welcome to Timers!`,
+    description: `Use Timers when you need to divide a large task into smaller pieces and keep within the time frame of each one. Create your own timers or use templates. You can edit this text, the main name and even suggest your own timers. The plugin also has AutoSave feature. Have fun! ⏰`,
+    sound: false,
+    timers: [
+      {
+        name: "Read the description",
+        time: {
+          minutes: 0,
+          seconds: 20
+        },
+        skip: false
+      },
+      {
+        name: "Think about your own configuration",
+        time: {
+          minutes: 1,
+          seconds: 0
+        },
+        skip: false
+      },
+      {
+        name: "Leave a like",
+        time: {
+          minutes: 0,
+          seconds: 15
+        },
+        skip: false
+      }
+    ]
+  });
 
   const {
     config,
@@ -22,6 +53,9 @@ const App = ({}) => {
     setConfigDescription
   } = useStore();
 
+  ////////////////////////////
+  ///// CONTROL BUTTONS //////
+  ////////////////////////////
   const handlePlay = () => {
     setIsPlaying(!isPlaying);
     writeToStorage(config);
@@ -32,8 +66,11 @@ const App = ({}) => {
     writeToStorage(initialConfig);
   };
 
+  //////////////////////////////
+  /////// HANDLE HEADER ////////
+  //////////////////////////////
+
   const haandleNameChange = e => {
-    console.log(e.target.innerText);
     setConfigName(e.target.innerText);
     writeToStorage(config);
   };
@@ -47,18 +84,10 @@ const App = ({}) => {
     const reader = new FileReader();
     reader.onload = () => {
       const config = JSON.parse(reader.result as string);
-      console.log("uploaded config: ", config);
       setInitialConfig(config);
       writeToStorage(config);
     };
     reader.readAsText(file);
-  };
-
-  const handleTemplateChoice = template => {
-    console.log("template choice: ", template);
-    setInitialConfig(template);
-    setConfig(template);
-    writeToStorage(template);
   };
 
   const handleSave = () => {
@@ -66,14 +95,19 @@ const App = ({}) => {
     setInitialConfig(JSON.parse(JSON.stringify(config)));
   };
 
+  ///////////////////////////
+  /////// USE EFFECT ////////
+  ///////////////////////////
   React.useEffect(() => {
     onmessage = event => {
       console.log(event.data);
-      if (event.data.pluginMessage.data) {
+      if (
+        event.data.pluginMessage.type === "read-from-storage" &&
+        event.data.pluginMessage.data
+      ) {
         setInitialConfig(
           JSON.parse(JSON.stringify(event.data.pluginMessage.data))
         );
-        setConfig(event.data.pluginMessage.data);
       }
     };
 
@@ -82,7 +116,10 @@ const App = ({}) => {
     writeToStorage(configDeepCopy);
   }, [initialConfig]);
 
-  return initialConfig && config ? (
+  ///////////////////////////
+  ///////// RENDER //////////
+  ///////////////////////////
+  return config ? (
     <div className={`${styles.darkTheme} ${styles.app}`}>
       <section className={styles.header}>
         <div className={styles.header_title}>
@@ -111,13 +148,16 @@ const App = ({}) => {
               onFileUpload={handleFileUpload}
             />
 
-            <Button
-              onClick={() => {
-                console.log("dummy");
-              }}
-              icon={"explore"}
-              size="small"
-            />
+            <div className={styles.header_dropdownWrap}>
+              <ExploreDropdown className={styles.header_dropdown} />
+              <Button
+                onClick={() => {
+                  console.log("dummy");
+                }}
+                icon={"explore"}
+                size="small"
+              />
+            </div>
           </div>
         </div>
         <p
@@ -157,7 +197,7 @@ const App = ({}) => {
       </section>
     </div>
   ) : (
-    <Explore onClick={handleTemplateChoice} />
+    <div>Loading...</div>
   );
 };
 
