@@ -1,5 +1,36 @@
 [
   {
+    name: `Hello there 👋🏾 Welcome to Timers!`,
+    description: `Use Timers when you need to divide a large task into smaller pieces and keep within the time frame of each one. Create your own timers or use templates. You can edit this text, the main name and even suggest your own timers. The plugin also has AutoSave feature. Have fun! ⏰`,
+    sound: false,
+    timers: [
+      {
+        name: "Read the description",
+        time: {
+          minutes: 0,
+          seconds: 20
+        },
+        skip: false
+      },
+      {
+        name: "Think about your own configuration",
+        time: {
+          minutes: 1,
+          seconds: 0
+        },
+        skip: false
+      },
+      {
+        name: "Leave a like",
+        time: {
+          minutes: 0,
+          seconds: 15
+        },
+        skip: false
+      }
+    ]
+  },
+  {
     "name": "UX Whiteboard Challange Interview",
     "description": "Ask questions to specify the challenge. Ask about the users and their context. Write down the main steps of the story.",
     "sound": false,
