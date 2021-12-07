@@ -6,7 +6,9 @@ interface CssExports {
   'header': string;
   'name': string;
   'time': string;
+  'timePlaceholder': string;
   'time_divider': string;
+  'time_input': string;
   'timer': string;
 }
 export const cssExports: CssExports;

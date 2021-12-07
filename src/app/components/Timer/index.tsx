@@ -126,6 +126,7 @@ const Timer = (props: TimerItemProps) => {
             onChange={handleMinutesChange}
             value={config.timers[props.index].time.minutes}
             onFocus={handleFocus}
+            className={styles.time_input}
           />
           <span className={styles.time_divider}>:</span>
           <input
@@ -133,6 +134,7 @@ const Timer = (props: TimerItemProps) => {
             onChange={handleSecondsChange}
             value={config.timers[props.index].time.seconds}
             onFocus={handleFocus}
+            className={styles.time_input}
           />
         </div>
       </section>

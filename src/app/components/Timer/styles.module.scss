@@ -27,29 +27,37 @@
 //
 
 .body {
+  position: relative;
   display: flex;
 }
 
 .time {
   display: flex;
-  align-items: center;
   &_divider {
     color: var(--white-clr);
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 700;
   }
-  input {
-    width: 45px;
+  &_input {
+    user-select: none;
+    width: 46px;
 
-    color: var(--white-clr);
-    font-size: 30px;
-    font-weight: 700;
+    font-family: "Cousine", monospace;
+    font-size: 32px;
+    font-weight: 400;
     text-align: right;
+    color: var(--white-clr);
 
     outline: none;
     border: none;
     background: none;
   }
+}
+
+.timePlaceholder {
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
 }
 
 .disabled {
