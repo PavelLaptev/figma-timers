@@ -1,7 +1,11 @@
 @import "./font-face";
 
 :root {
+  --accent-clr: #f45;
+  --selection-clr: rgba(255, 68, 68, 0.51);
+
   --radius-m: 10px;
+  --radius-l: 20px;
   --shadow-m: 0px 6px 24px rgba(0, 0, 0, 0.35);
 }
 
@@ -15,12 +19,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-// *::selection {
-//   color: var(--white-clr);
-//   background-color: var(--dark-clr);
-// }
+*::selection {
+  color: var(--white-clr);
+  background-color: var(--selection-clr);
+}
 
 body {
   font-family: "Inter", sans-serif;
   margin: 0;
+}
+
+button {
+  font-family: "Inter", sans-serif;
+}
+
+input {
+  font-family: "Inter", sans-serif;
 }

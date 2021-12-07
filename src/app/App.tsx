@@ -41,7 +41,7 @@ const App = ({}) => {
         skip: false
       }
     ]
-  });
+  } as ConfigProps);
 
   const {
     config,
@@ -50,7 +50,9 @@ const App = ({}) => {
     setConfig,
     resetTimers,
     setConfigName,
-    setConfigDescription
+    setConfigDescription,
+    hideExploreDropdown,
+    toggleExploreDropdown
   } = useStore();
 
   ////////////////////////////
@@ -95,6 +97,11 @@ const App = ({}) => {
     setInitialConfig(JSON.parse(JSON.stringify(config)));
   };
 
+  const handleSelectTemplate = template => {
+    setInitialConfig(template);
+    writeToStorage(template);
+  };
+
   ///////////////////////////
   /////// USE EFFECT ////////
   ///////////////////////////
@@ -121,6 +128,13 @@ const App = ({}) => {
   ///////////////////////////
   return config ? (
     <div className={`${styles.darkTheme} ${styles.app}`}>
+      <div
+        className={`${styles.dimBackground} ${
+          hideExploreDropdown ? styles.hide : ""
+        }`}
+        onClick={toggleExploreDropdown}
+      />
+
       <section className={styles.header}>
         <div className={styles.header_title}>
           <h1
@@ -149,11 +163,12 @@ const App = ({}) => {
             />
 
             <div className={styles.header_dropdownWrap}>
-              <ExploreDropdown className={styles.header_dropdown} />
+              <ExploreDropdown
+                className={`${hideExploreDropdown ? styles.hide : ""}`}
+                onClick={handleSelectTemplate}
+              />
               <Button
-                onClick={() => {
-                  console.log("dummy");
-                }}
+                onClick={toggleExploreDropdown}
                 icon={"explore"}
                 size="small"
               />

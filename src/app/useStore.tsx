@@ -27,7 +27,11 @@ const useStore = create<any>(set => ({
   setNowPlaying: (index: number) => set(() => ({ nowPlaying: index })),
 
   isPlaying: false,
-  setIsPlaying: (val: boolean) => set(() => ({ isPlaying: val }))
+  setIsPlaying: (val: boolean) => set(() => ({ isPlaying: val })),
+
+  hideExploreDropdown: true,
+  toggleExploreDropdown: () =>
+    set(state => ({ hideExploreDropdown: !state.hideExploreDropdown }))
 }));
 
 export default useStore;

@@ -20,6 +20,10 @@ const Timer = (props: TimerItemProps) => {
     setConfigTimerName
   } = useStore();
 
+  ////////////////////////
+  ////// USE EFFECT //////
+  ////////////////////////
+
   React.useEffect(() => {
     const joinedTime =
       Number(config.timers[props.index].time.minutes) * 60 +
@@ -76,38 +80,62 @@ const Timer = (props: TimerItemProps) => {
     writeToStorage(config);
   };
 
+  ////////////////////////
+  //// TIME HANDLERS /////
+  ////////////////////////
+
+  const setNumbersOnly = (str: string) => {
+    const regex = /[^0-9]/g;
+    return str.replace(regex, "");
+  };
+
   const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNowPlaying(0);
-    setConfigMinutes(e.target.value, props.index);
+    setConfigMinutes(setNumbersOnly(e.target.value), props.index);
     writeToStorage(config);
   };
 
   const handleSecondsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNowPlaying(0);
-    setConfigSeconds(e.target.value, props.index);
+    setConfigSeconds(setNumbersOnly(e.target.value), props.index);
     writeToStorage(config);
   };
 
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    e.target.select();
+  };
+
+  ////////////////////////
+  //////// RENDER ////////
+  ////////////////////////
+
   return (
-    <section className={` ${isPlaying ? styles.disabled : ""}`}>
-      <div>{isPlaying}</div>
-      <div className={`${styles.timer}`}>
+    <section className={`${styles.timer} ${isPlaying ? styles.disabled : ""}`}>
+      <section className={styles.header}>
         <input
+          className={styles.name}
           onChange={handleNameChange}
           value={config.timers[props.index].name}
-        ></input>
+        />
+      </section>
+
+      <section className={styles.body}>
         <div className={styles.time}>
           <input
+            maxLength={2}
             onChange={handleMinutesChange}
             value={config.timers[props.index].time.minutes}
+            onFocus={handleFocus}
           />
-          <span>:</span>
+          <span className={styles.time_divider}>:</span>
           <input
+            maxLength={2}
             onChange={handleSecondsChange}
             value={config.timers[props.index].time.seconds}
+            onFocus={handleFocus}
           />
         </div>
-      </div>
+      </section>
     </section>
   );
 };

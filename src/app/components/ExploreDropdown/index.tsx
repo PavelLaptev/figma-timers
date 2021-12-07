@@ -3,12 +3,14 @@ import styles from "./styles.module.scss";
 
 interface Props {
   className?: string;
+  onClick?: (template) => void;
 }
 
 interface LinkButtonProps {
   href: string;
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
 const LinkButton = (props: LinkButtonProps) => {
@@ -17,7 +19,8 @@ const LinkButton = (props: LinkButtonProps) => {
       href={props.href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`${styles.linkButton}`}
+      className={`${styles.button} ${props.className}`}
+      onClick={props.onClick}
     >
       {props.children}
     </a>
@@ -45,17 +48,25 @@ const ExploreDropdown = (props: Props) => {
   }, []);
 
   return (
-    <section className={`${styles.wrap} ${props.className}`}>
-      <div className={styles.templates}>
-        {templates.map((template, index) => {
-          return (
-            <LinkButton key={index} href={"template.url"}>
-              {template.name}
-            </LinkButton>
-          );
-        })}
-      </div>
-      <LinkButton href={""}>Suggest template</LinkButton>
+    <section className={`${props.className} ${styles.wrap}`}>
+      {templates.map((template, index) => {
+        return (
+          <LinkButton
+            key={index}
+            href={""}
+            className={styles.linkButton}
+            onClick={() => props.onClick(template)}
+          >
+            {template.name}
+          </LinkButton>
+        );
+      })}
+      <LinkButton
+        href={"https://github.com/PavelLaptev/figma-timers/tree/configs"}
+        className={styles.suggest}
+      >
+        Suggest template
+      </LinkButton>
     </section>
   );
 };
