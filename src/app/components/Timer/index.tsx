@@ -8,6 +8,9 @@ interface TimerItemProps {
 }
 
 const Timer = (props: TimerItemProps) => {
+  const minutesRef = React.useRef(null);
+  const secondsRef = React.useRef(null);
+
   const {
     config,
     isPlaying,
@@ -101,7 +104,7 @@ const Timer = (props: TimerItemProps) => {
     writeToStorage(config);
   };
 
-  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleFocus = e => {
     e.target.select();
   };
 
@@ -121,27 +124,26 @@ const Timer = (props: TimerItemProps) => {
 
       <section className={styles.body}>
         <div className={styles.time}>
-          <div className={styles.time_inputWrap}>
-            <input
-              maxLength={2}
-              onChange={handleMinutesChange}
-              value={config.timers[props.index].time.minutes}
-              onFocus={handleFocus}
-              className={styles.time_input}
-            />
-          </div>
+          <input
+            ref={minutesRef}
+            maxLength={2}
+            onChange={handleMinutesChange}
+            value={config.timers[props.index].time.minutes}
+            onFocus={handleFocus}
+            onClick={handleFocus}
+            className={styles.time_input}
+          />
 
           <span className={styles.time_divider}>:</span>
-
-          <div className={styles.time_inputWrap}>
-            <input
-              maxLength={2}
-              onChange={handleSecondsChange}
-              value={config.timers[props.index].time.seconds}
-              onFocus={handleFocus}
-              className={styles.time_input}
-            />
-          </div>
+          <input
+            ref={secondsRef}
+            maxLength={2}
+            onChange={handleSecondsChange}
+            value={config.timers[props.index].time.seconds}
+            onFocus={handleFocus}
+            onClick={handleFocus}
+            className={styles.time_input}
+          />
         </div>
       </section>
     </section>

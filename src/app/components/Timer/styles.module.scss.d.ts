@@ -9,8 +9,6 @@ interface CssExports {
   'timePlaceholder': string;
   'time_divider': string;
   'time_input': string;
-  'time_inputWrap': string;
-  'time_null': string;
   'timer': string;
 }
 export const cssExports: CssExports;
