@@ -1,164 +1,167 @@
 import * as React from "react";
+import writeToStorage from "../../utils/writeToStorage";
+import useStore from "../../useStore";
+
 import styles from "./styles.module.scss";
 
-interface TimerProps {
-  timerConfig: Array<TimerConfigProps>;
-}
+import tiktak from "./assets/tiktak.mp3";
 
 interface TimerItemProps {
   index: number;
 }
 
-const Timers = (mainProps: TimerProps) => {
-  const [newTimeConfig, setNewTimeConfig] = React.useState(
-    mainProps.timerConfig
-  );
-  const [playState, setPlayState] = React.useState(false);
-  const [nowPlaying, setNowPlaying] = React.useState(0);
+const Timer = (props: TimerItemProps) => {
+  let minorAudio = new Audio(tiktak);
 
-  const TimerItem = (props: TimerItemProps) => {
-    const [dragOverState, setDragOverState] = React.useState(false);
-    const [isDraggingState, setIsDraggingState] = React.useState(false);
+  const {
+    config,
+    isPlaying,
+    nowPlaying,
+    setIsPlaying,
+    setNowPlaying,
+    setConfigTime,
+    setConfigMinutes,
+    setConfigSeconds,
+    setConfigTimerName
+  } = useStore();
 
-    React.useEffect(() => {
-      const joinedTime =
-        Number(newTimeConfig[props.index].time.minutes) * 60 +
-        Number(newTimeConfig[props.index].time.seconds) -
-        1;
-      const splittedTime = {
-        minutes: Math.floor(joinedTime / 60),
-        seconds: joinedTime % 60
-      };
+  ////////////////////////
+  ////// USE EFFECT //////
+  ////////////////////////
 
-      // Check if it is the lasat timer
-      if (newTimeConfig.length < nowPlaying + 1) {
-        setPlayState(false);
-      }
+  React.useEffect(() => {
+    console.log(minorAudio);
 
-      // Chceck if it is playing and run only one timer
-      if (playState && nowPlaying === props.index) {
-        // If the tied is over switch to the next timer
-        if (!(joinedTime + 1)) {
-          setNowPlaying(props.index + 1);
-          return;
-        }
-
-        // Run the interval for the timer
-        const intervalId = setInterval(() => {
-          setNewTimeConfig(prevState => {
-            const newState = [...prevState];
-            newState[props.index].time = splittedTime;
-            return newState;
-          });
-
-          console.log(splittedTime);
-        }, 1000);
-
-        return () => {
-          clearInterval(intervalId);
-        };
-      }
-    }, [newTimeConfig[props.index]]);
-
-    /////////////////////
-    // HANDLE DRAGGING //
-    /////////////////////
-
-    const handleDragStart = e => {
-      setIsDraggingState(true);
-      e.dataTransfer.setData("index", props.index);
+    const joinedTime =
+      Number(config.timers[props.index].time.minutes) * 60 +
+      Number(config.timers[props.index].time.seconds);
+    const joinedTimeMinusSecond = joinedTime - 1;
+    const splittedTime = {
+      minutes: Math.floor(joinedTimeMinusSecond / 60),
+      seconds: joinedTimeMinusSecond % 60
     };
-
-    const handleDragEnd = () => {
-      setIsDraggingState(false);
-    };
-
-    const handleDragOver = e => {
-      e.preventDefault();
-      setDragOverState(true);
-    };
-
-    const handleDragLeave = () => {
-      setDragOverState(false);
-    };
-
-    const handleDrop = e => {
-      setDragOverState(false);
-      const draggedIndex = Number(e.dataTransfer.getData("index"));
-
-      setNewTimeConfig(prevState => {
-        const newState = [...prevState];
-        const draggedItem = newState[draggedIndex];
-        newState.splice(draggedIndex, 1);
-        newState.splice(props.index, 0, draggedItem);
-        return newState;
-      });
-
-      setNowPlaying(0);
-    };
-
-    ///////////////////
-    // HANDLE INPUTS //
-    ///////////////////
-
-    const handlleLabellChange = e => {
-      const newState = [...newTimeConfig];
-      newState[props.index].name = e.target.value;
-      setNewTimeConfig(newState);
-    };
-
-    return (
-      <section
-        draggable
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        className={`${styles.draggableWrap} ${
-          playState ? styles.disabled : ""
-        }`}
-      >
-        <div
-          className={`${styles.timer} ${dragOverState ? styles.dragOver : ""} ${
-            isDraggingState ? styles.dragging : ""
-          }`}
-        >
-          <input
-            className={styles.timer_label}
-            value={newTimeConfig[props.index].name}
-            onChange={handlleLabellChange}
-          />
-          <h3>
-            {newTimeConfig[props.index].time.minutes}:
-            {newTimeConfig[props.index].time.seconds}
-          </h3>
-        </div>
-      </section>
+    const totalTime = config.timers.reduce(
+      (acc, cur) => acc + (cur.time.minutes + cur.time.seconds),
+      0
     );
+
+    // Check if it is the lasat timer
+    if (config.timers.length < nowPlaying + 1) setIsPlaying(false);
+
+    // if total time sum is 0, stop timer
+    if (totalTime === 0) setIsPlaying(false);
+
+    // Chceck if it is playing and run only one timer
+    if (isPlaying && nowPlaying === props.index) {
+      // if current time is not 0, next timer
+      if (joinedTime === 0) {
+        console.log("Timer is over");
+        setNowPlaying(props.index + 1);
+        return;
+      }
+
+      // Run the interval for the timer
+      const intervalId = setInterval(() => {
+        setConfigTime(splittedTime);
+        // If the tied is over switch to the next timer
+      }, 1000);
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [
+    config,
+    config.timers[props.index].time,
+    isPlaying,
+    nowPlaying,
+    setNowPlaying,
+    setConfigTime,
+    setConfigMinutes,
+    setConfigSeconds
+  ]);
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setConfigTimerName(e.target.value, props.index);
+    writeToStorage(config);
   };
 
-  const handlePlay = () => {
-    setPlayState(true);
+  ////////////////////////
+  //// TIME HANDLERS /////
+  ////////////////////////
+
+  const setNumbersOnly = (str: string) => {
+    const regex = /[^0-9]/g;
+    return str.replace(regex, "");
   };
 
-  const handlePause = () => {
-    setPlayState(false);
+  const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNowPlaying(0);
+    setConfigMinutes(setNumbersOnly(e.target.value), props.index);
+    writeToStorage(config);
   };
+
+  const handleSecondsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNowPlaying(0);
+    setConfigSeconds(setNumbersOnly(e.target.value), props.index);
+    writeToStorage(config);
+  };
+
+  const handleFocus = e => {
+    e.target.select();
+  };
+
+  ////////////////////////
+  //////// RENDER ////////
+  ////////////////////////
 
   return (
-    <div>
-      <section className={""}>
-        <button onClick={handlePlay}>Play</button>
-        <button onClick={handlePause}>Pause</button>
+    <section className={`${styles.timer} ${isPlaying ? styles.disabled : ""}`}>
+      <section className={styles.header}>
+        <input
+          className={styles.name}
+          onChange={handleNameChange}
+          value={config.timers[props.index].name}
+        />
       </section>
-      <section className={styles.timersList}>
-        {mainProps.timerConfig.map((_, index) => {
-          return <TimerItem index={index} key={`timer-${index}`} />;
-        })}
+
+      <section className={styles.body}>
+        <div className={styles.time}>
+          <input
+            maxLength={2}
+            onChange={handleMinutesChange}
+            value={config.timers[props.index].time.minutes}
+            onFocus={handleFocus}
+            onClick={handleFocus}
+            className={styles.time_input}
+            style={{
+              width:
+                String(config.timers[props.index].time.minutes).length > 1
+                  ? "42px"
+                  : "24px"
+            }}
+          />
+
+          <span className={styles.time_divider}>:</span>
+
+          <input
+            maxLength={2}
+            onChange={handleSecondsChange}
+            value={config.timers[props.index].time.seconds}
+            onFocus={handleFocus}
+            onClick={handleFocus}
+            className={styles.time_input}
+            style={{
+              width:
+                String(config.timers[props.index].time.seconds).length > 1
+                  ? "42px"
+                  : "24px"
+            }}
+          />
+        </div>
       </section>
-    </div>
+    </section>
   );
 };
 
-export default Timers;
+export default Timer;

@@ -2,6 +2,15 @@
 // Please do not change this file!
 interface CssExports {
   'app': string;
+  'darkTheme': string;
+  'dimBackground': string;
+  'generalButtons': string;
+  'header': string;
+  'header_buttons': string;
+  'header_dropdownWrap': string;
+  'header_title': string;
+  'hide': string;
+  'timersList': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

@@ -1,18 +1,36 @@
+.wrap {
+  position: relative;
+  display: flex;
+}
+
+.fileInput {
+  position: absolute;
+  top: -500px;
+  left: -500px;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  &:hover {
+    .button {
+      background-color: var(--neutral-middle-clr);
+    }
+  }
+}
+
 .button {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--black-clr);
+  padding: 4px 16px;
+  border-radius: var(--radius-m);
   border: none;
   outline: none;
-  height: var(--control-height);
-  padding: 8px;
-  border-radius: var(--radius-m);
-  transition: all var(--hover-speed) ease;
+  transition: all 0.1s ease-in-out;
+
   &:hover {
-    .tooltip {
-      opacity: 1;
-    }
+    background-color: var(--neutral-middle-clr);
   }
   &:disabled {
     opacity: 0.8;
@@ -20,66 +38,24 @@
   }
 }
 
-.lightStyle {
-  background-color: var(--light-clr);
-  &:hover {
-    background-color: var(--middle-clr);
-  }
+.large {
+  height: 48px;
+}
+.medium {
+  height: 40px;
+}
+.small {
+  padding: 0;
+  height: 24px;
 }
 
-.darkStyle {
-  background-color: var(--white-clr);
-  &:hover {
-    background-color: var(--light-clr);
-  }
+.noHeight {
+  height: auto;
 }
 
 .text {
-  user-select: none;
-  margin: 0 4px;
-  color: var(--primary-clr);
-  font-family: "Inter", sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 1.2;
-}
-
-.icon {
-  user-select: none;
-}
-
-.input {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-
-.tooltip {
-  pointer-events: none;
-  position: absolute;
-  opacity: 0;
-  z-index: 99;
-  bottom: -24px;
+  font-size: 16px;
+  line-height: 100%;
+  font-weight: bold;
   color: var(--white-clr);
-  font-family: "Inter", sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1;
-  padding: var(--spacer-s);
-  background-color: var(--dark-clr);
-  border-radius: var(--radius-s);
-  width: max-content;
-  transition: all 0.1s ease;
-  &Left {
-    left: 0;
-  }
-  &Center {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  &Right {
-    right: 0;
-  }
 }

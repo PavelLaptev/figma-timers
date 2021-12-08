@@ -1,21 +1,12 @@
-@import "./font-face";
+@import url("https://fonts.googleapis.com/css2?family=Cousine:wght@400;700&family=IBM+Plex+Sans:wght@400;600;700&family=Inter:wght@400;700;900&display=swap");
 
 :root {
-  //
-  --white-clr: #fff;
-  --light-clr: #eff2f3;
-  --middle-clr: #e2e5e5;
-  --semi-dark-clr: #c5ced1;
-  --dark-clr: #353738;
-  //
-  --radius-s: 4px;
-  --radius-m: 8px;
+  --accent-clr: #f45;
+  --selection-clr: rgba(255, 68, 68, 0.51);
+
+  --radius-m: 10px;
   --radius-l: 20px;
-  //
-  --spacer-s: 4px;
-  --spacer-m: 8px;
-  --spacer-l: 16px;
-  --spacer-xl: 24px;
+  --shadow-m: 0px 6px 24px rgba(0, 0, 0, 0.35);
 }
 
 *,
@@ -28,13 +19,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-// *::selection {
-//   color: var(--white-clr);
-//   background-color: var(--dark-clr);
-// }
+*::selection {
+  color: var(--white-clr);
+  background-color: var(--selection-clr);
+}
 
 body {
   font-family: "Inter", sans-serif;
-  font-size: 12px;
   margin: 0;
+}
+
+button {
+  font-family: "Inter", sans-serif;
+}
+
+input {
+  font-family: "Inter", sans-serif;
 }

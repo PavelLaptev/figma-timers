@@ -1,60 +1,81 @@
-.timersList {
-  display: flex;
-  flex-direction: column;
-}
-
 .timer {
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  border: 1px solid #ccc;
-  background: white;
-  margin: 8px 0;
-  transition: transform 0.2s ease-in-out, margin 0.1s ease-in-out;
+  background-color: var(--neutral-middle-clr);
+  border-radius: var(--radius-m);
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  box-shadow: var(--shadow-m);
+}
+
+//
+
+.header {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.name {
+  font-size: 14px;
+  color: var(--white-clr);
+
+  outline: none;
+  border: none;
+  background: none;
+}
+
+//
+
+.body {
+  position: relative;
+  display: flex;
+}
+
+.time {
+  display: flex;
+  &_divider {
+    color: var(--white-clr);
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 2px;
+  }
+  &_input {
+    user-select: none;
+    padding-top: 3px;
+    height: 36px;
+    width: 40px;
+    border-radius: 6px;
+    background: transparent;
+
+    font-family: "Cousine", monospace;
+    font-size: 30px;
+    font-weight: 400;
+    text-align: center;
+    color: var(--white-clr);
+
+    outline: none;
+    border: none;
+    caret-color: transparent;
+
+    transition: all 0.05s ease-in-out;
+
+    &:focus {
+      background: var(--selection-clr);
+    }
+
+    &::selection {
+      background: none;
+    }
+  }
+}
+
+.timePlaceholder {
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
 }
 
 .disabled {
   opacity: 0.5;
   pointer-events: none;
-}
-
-//////////////////////////////
-////////// DRAGGING //////////
-//////////////////////////////
-
-.draggableWrap {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.dragPlaceholder {
-  position: absolute;
-  left: 0;
-  bottom: 6px;
-  display: none;
-  height: 4px;
-  width: 100%;
-  background-color: aquamarine;
-  &_show {
-    display: block;
-  }
-}
-
-.dragging {
-  opacity: 1;
-}
-
-.dragOver {
-  transform: scale(0.95) translateY(8px);
-}
-
-//////////////////////////////
-//////////////////////////////
-//////////////////////////////
-
-.timer {
-  &_label {
-    display: flex;
-  }
 }

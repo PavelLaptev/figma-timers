@@ -3,7 +3,7 @@ declare module "*.scss" {
   export = content;
 }
 
-declare module "*.png" {
+declare module "*.mp3" {
   const value: any;
   export default value;
 }
@@ -12,16 +12,3 @@ declare module "*.svg" {
   const content: any;
   export default content;
 }
-
-declare global {
-  interface TimerConfigProps {
-    name: string;
-    time: {
-      minutes: number;
-      seconds: number;
-    };
-    skip: boolean;
-  }
-}
-
-export {};
