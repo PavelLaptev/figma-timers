@@ -38,12 +38,31 @@
     font-size: 28px;
     font-weight: 700;
   }
+  &_inputWrap {
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    height: 32px;
+    width: 46px;
+    border-radius: 6px;
+    background: var(--black-opacity-clr);
+  }
+  &_null {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 4px;
+    background: var(--white-clr);
+  }
   &_input {
     user-select: none;
-    width: 46px;
+    height: 100%;
+    width: 100%;
+    margin-top: 2px;
 
     font-family: "Cousine", monospace;
-    font-size: 32px;
+    font-size: 34px;
     font-weight: 400;
     text-align: right;
     color: var(--white-clr);

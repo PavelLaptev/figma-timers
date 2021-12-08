@@ -121,21 +121,27 @@ const Timer = (props: TimerItemProps) => {
 
       <section className={styles.body}>
         <div className={styles.time}>
-          <input
-            maxLength={2}
-            onChange={handleMinutesChange}
-            value={config.timers[props.index].time.minutes}
-            onFocus={handleFocus}
-            className={styles.time_input}
-          />
+          <div className={styles.time_inputWrap}>
+            <input
+              maxLength={2}
+              onChange={handleMinutesChange}
+              value={config.timers[props.index].time.minutes}
+              onFocus={handleFocus}
+              className={styles.time_input}
+            />
+          </div>
+
           <span className={styles.time_divider}>:</span>
-          <input
-            maxLength={2}
-            onChange={handleSecondsChange}
-            value={config.timers[props.index].time.seconds}
-            onFocus={handleFocus}
-            className={styles.time_input}
-          />
+
+          <div className={styles.time_inputWrap}>
+            <input
+              maxLength={2}
+              onChange={handleSecondsChange}
+              value={config.timers[props.index].time.seconds}
+              onFocus={handleFocus}
+              className={styles.time_input}
+            />
+          </div>
         </div>
       </section>
     </section>
