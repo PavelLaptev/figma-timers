@@ -37,17 +37,18 @@
     color: var(--white-clr);
     font-size: 28px;
     font-weight: 700;
+    margin: 0 2px;
   }
   &_input {
     user-select: none;
-    padding-top: 4px;
+    padding-top: 3px;
     height: 36px;
-    width: 42px;
+    width: 40px;
     border-radius: 6px;
-    background: var(--black-opacity-clr);
+    background: transparent;
 
     font-family: "Cousine", monospace;
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 400;
     text-align: center;
     color: var(--white-clr);
@@ -56,8 +57,10 @@
     border: none;
     caret-color: transparent;
 
+    transition: all 0.05s ease-in-out;
+
     &:focus {
-      background: var(--black-clr);
+      background: var(--selection-clr);
     }
 
     &::selection {

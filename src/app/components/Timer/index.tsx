@@ -1,15 +1,17 @@
 import * as React from "react";
 import writeToStorage from "../../utils/writeToStorage";
 import useStore from "../../useStore";
+
 import styles from "./styles.module.scss";
+
+import tiktak from "./assets/tiktak.mp3";
 
 interface TimerItemProps {
   index: number;
 }
 
 const Timer = (props: TimerItemProps) => {
-  const minutesRef = React.useRef(null);
-  const secondsRef = React.useRef(null);
+  let minorAudio = new Audio(tiktak);
 
   const {
     config,
@@ -28,6 +30,8 @@ const Timer = (props: TimerItemProps) => {
   ////////////////////////
 
   React.useEffect(() => {
+    console.log(minorAudio);
+
     const joinedTime =
       Number(config.timers[props.index].time.minutes) * 60 +
       Number(config.timers[props.index].time.seconds);
@@ -59,7 +63,6 @@ const Timer = (props: TimerItemProps) => {
       // Run the interval for the timer
       const intervalId = setInterval(() => {
         setConfigTime(splittedTime);
-
         // If the tied is over switch to the next timer
       }, 1000);
 
@@ -125,24 +128,35 @@ const Timer = (props: TimerItemProps) => {
       <section className={styles.body}>
         <div className={styles.time}>
           <input
-            ref={minutesRef}
             maxLength={2}
             onChange={handleMinutesChange}
             value={config.timers[props.index].time.minutes}
             onFocus={handleFocus}
             onClick={handleFocus}
             className={styles.time_input}
+            style={{
+              width:
+                String(config.timers[props.index].time.minutes).length > 1
+                  ? "42px"
+                  : "24px"
+            }}
           />
 
           <span className={styles.time_divider}>:</span>
+
           <input
-            ref={secondsRef}
             maxLength={2}
             onChange={handleSecondsChange}
             value={config.timers[props.index].time.seconds}
             onFocus={handleFocus}
             onClick={handleFocus}
             className={styles.time_input}
+            style={{
+              width:
+                String(config.timers[props.index].time.seconds).length > 1
+                  ? "42px"
+                  : "24px"
+            }}
           />
         </div>
       </section>
