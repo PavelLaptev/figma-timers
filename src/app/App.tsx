@@ -8,6 +8,11 @@ import ExploreDropdown from "./components/ExploreDropdown";
 import Button from "./components/Button";
 import Timer from "./components/Timer";
 
+const minorAudio = new Audio(
+  "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak.mp3"
+);
+minorAudio.volume = 0.4;
+
 console.clear();
 
 const App = ({}) => {
@@ -123,6 +128,12 @@ const App = ({}) => {
     writeToStorage(configDeepCopy);
   }, [initialConfig]);
 
+  React.useEffect(() => {
+    if (!isPlaying) {
+      minorAudio.pause();
+    }
+  }, [isPlaying]);
+
   ///////////////////////////
   ///////// RENDER //////////
   ///////////////////////////
@@ -207,7 +218,16 @@ const App = ({}) => {
       </section>
       <section className={styles.timersList}>
         {config.timers.map((_, index) => {
-          return <Timer key={`timer-${index}`} index={index} />;
+          return (
+            <Timer
+              key={`timer-${index}`}
+              index={index}
+              sound={{
+                major: minorAudio,
+                minor: minorAudio
+              }}
+            />
+          );
         })}
       </section>
     </div>

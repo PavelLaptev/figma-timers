@@ -4,15 +4,15 @@ import useStore from "../../useStore";
 
 import styles from "./styles.module.scss";
 
-import tiktak from "./assets/tiktak.mp3";
-
 interface TimerItemProps {
   index: number;
+  sound: {
+    major: HTMLAudioElement;
+    minor: HTMLAudioElement;
+  };
 }
 
 const Timer = (props: TimerItemProps) => {
-  let minorAudio = new Audio(tiktak);
-
   const {
     config,
     isPlaying,
@@ -30,8 +30,6 @@ const Timer = (props: TimerItemProps) => {
   ////////////////////////
 
   React.useEffect(() => {
-    console.log(minorAudio);
-
     const joinedTime =
       Number(config.timers[props.index].time.minutes) * 60 +
       Number(config.timers[props.index].time.seconds);
@@ -53,6 +51,11 @@ const Timer = (props: TimerItemProps) => {
 
     // Chceck if it is playing and run only one timer
     if (isPlaying && nowPlaying === props.index) {
+      // Play sound 5 seconds before end
+      if (joinedTime === 5 && props.sound.minor.paused) {
+        props.sound.minor.play();
+      }
+
       // if current time is not 0, next timer
       if (joinedTime === 0) {
         console.log("Timer is over");
@@ -80,6 +83,8 @@ const Timer = (props: TimerItemProps) => {
     setConfigMinutes,
     setConfigSeconds
   ]);
+
+  React.useEffect(() => {}, []);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfigTimerName(e.target.value, props.index);
