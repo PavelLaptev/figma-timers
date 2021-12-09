@@ -9,7 +9,7 @@ import Button from "./components/Button";
 import Timer from "./components/Timer";
 
 const minorAudio = new Audio(
-  "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak.mp3"
+  "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak2.mp3"
 );
 minorAudio.volume = 0.4;
 
@@ -222,6 +222,7 @@ const App = ({}) => {
             <Timer
               key={`timer-${index}`}
               index={index}
+              lastTimer={index === config.timers.length - 1}
               sound={{
                 major: minorAudio,
                 minor: minorAudio

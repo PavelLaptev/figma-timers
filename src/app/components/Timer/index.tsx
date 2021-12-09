@@ -6,6 +6,7 @@ import styles from "./styles.module.scss";
 
 interface TimerItemProps {
   index: number;
+  lastTimer: boolean;
   sound: {
     major: HTMLAudioElement;
     minor: HTMLAudioElement;
@@ -52,7 +53,7 @@ const Timer = (props: TimerItemProps) => {
     // Chceck if it is playing and run only one timer
     if (isPlaying && nowPlaying === props.index) {
       // Play sound 5 seconds before end
-      if (joinedTime === 5 && props.sound.minor.paused) {
+      if (joinedTime === 3 && !props.lastTimer) {
         props.sound.minor.play();
       }
 
