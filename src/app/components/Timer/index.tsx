@@ -4,13 +4,18 @@ import useStore from "../../useStore";
 
 import styles from "./styles.module.scss";
 
+const minorAudio = new Audio(
+  "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak.mp3"
+);
+minorAudio.load();
+minorAudio.volume = 0.3;
+const majorAudio = new Audio(
+  "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/final1.mp3"
+);
+
 interface TimerItemProps {
   index: number;
   lastTimer: boolean;
-  sound: {
-    major: HTMLAudioElement;
-    minor: HTMLAudioElement;
-  };
 }
 
 const Timer = (props: TimerItemProps) => {
@@ -53,9 +58,7 @@ const Timer = (props: TimerItemProps) => {
     // Chceck if it is playing and run only one timer
     if (isPlaying && nowPlaying === props.index) {
       // Play sound 5 seconds before end
-      if (joinedTime === 3 && !props.lastTimer) {
-        props.sound.minor.play();
-      }
+      if (joinedTime === 0 && !props.lastTimer) minorAudio.play();
 
       // if current time is not 0, next timer
       if (joinedTime === 0) {
@@ -84,8 +87,6 @@ const Timer = (props: TimerItemProps) => {
     setConfigMinutes,
     setConfigSeconds
   ]);
-
-  React.useEffect(() => {}, []);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfigTimerName(e.target.value, props.index);
