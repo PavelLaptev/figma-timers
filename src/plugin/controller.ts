@@ -4,13 +4,13 @@
 
 // Show UI
 let UISize = {
-  width: 320,
+  width: 300,
   height: 700
 };
 figma.showUI(__html__, UISize);
 
 // Clear the storage
-figma.clientStorage.setAsync("timer-config", void 0);
+// figma.clientStorage.setAsync("timer-config", void 0);
 
 figma.clientStorage.getAsync("timer-config").then(data => {
   // console.log("from storage:", data);

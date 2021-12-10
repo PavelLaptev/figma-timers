@@ -1,5 +1,6 @@
 import * as React from "react";
 import useStore from "./useStore";
+
 import styles from "./app.module.scss";
 
 import writeToStorage from "./utils/writeToStorage";
@@ -53,8 +54,7 @@ const App = ({}) => {
     setConfigName,
     setConfigDescription,
     hideExploreDropdown,
-    toggleExploreDropdown,
-    setConfigSkip
+    toggleExploreDropdown
   } = useStore();
 
   ////////////////////////////
@@ -105,10 +105,27 @@ const App = ({}) => {
     writeToStorage(template);
   };
 
+  const handleAddNewTimer = () => {
+    const newTimer = {
+      name: "New timer",
+      time: {
+        minutes: 1,
+        seconds: 0
+      },
+      skip: false
+    };
+    setInitialConfig({
+      ...config,
+      timers: [...config.timers, newTimer]
+    });
+  };
+
   ///////////////////////////
   /////// USE EFFECT ////////
   ///////////////////////////
   React.useEffect(() => {
+    document.body.classList.add(styles.darkTheme);
+
     onmessage = event => {
       console.log(event.data);
       if (
@@ -130,8 +147,19 @@ const App = ({}) => {
   ///////// RENDER //////////
   ///////////////////////////
   return config ? (
-    <div className={`${styles.darkTheme} ${styles.app}`}>
+    <div
+      className={`${styles.app}`}
+      style={{
+        overflow: hideExploreDropdown ? "visible" : "hidden"
+      }}
+    >
       <Resizer />
+
+      <ExploreDropdown
+        className={`${hideExploreDropdown ? styles.hide : ""}`}
+        onClick={handleSelectTemplate}
+      />
+
       <div
         className={`${styles.dimBackground} ${
           hideExploreDropdown ? styles.hide : ""
@@ -141,13 +169,6 @@ const App = ({}) => {
 
       <section className={styles.header}>
         <div className={styles.header_title}>
-          <h1
-            contentEditable
-            suppressContentEditableWarning
-            onInput={haandleNameChange}
-          >
-            {initialConfig.name}
-          </h1>
           <div className={styles.header_buttons}>
             <Button
               icon={"save"}
@@ -166,18 +187,19 @@ const App = ({}) => {
               onFileUpload={handleFileUpload}
             />
 
-            <div className={styles.header_dropdownWrap}>
-              <ExploreDropdown
-                className={`${hideExploreDropdown ? styles.hide : ""}`}
-                onClick={handleSelectTemplate}
-              />
-              <Button
-                onClick={toggleExploreDropdown}
-                icon={"explore"}
-                size="small"
-              />
-            </div>
+            <Button
+              onClick={toggleExploreDropdown}
+              icon={"explore"}
+              size="small"
+            />
           </div>
+          <h1
+            contentEditable
+            suppressContentEditableWarning
+            onInput={haandleNameChange}
+          >
+            {initialConfig.name}
+          </h1>
         </div>
         <p
           contentEditable
@@ -220,6 +242,12 @@ const App = ({}) => {
           );
         })}
       </section>
+      <Button
+        size="large"
+        className={styles.addTimer}
+        icon="plus"
+        onClick={handleAddNewTimer}
+      />
     </div>
   ) : (
     <div>Loading...</div>

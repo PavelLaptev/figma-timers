@@ -22,8 +22,6 @@ const useStore = create<any>(set => ({
     set(state => (state.config.timers[index].time.minutes = Number(minutes))),
   setConfigSeconds: (seconds, index) =>
     set(state => (state.config.timers[index].time.seconds = Number(seconds))),
-  setConfigSkip: (skip, index) =>
-    set(state => (state.config.timers[index].skip = skip)),
 
   nowPlaying: 0,
   setNowPlaying: (index: number) => set(() => ({ nowPlaying: index })),
@@ -33,7 +31,24 @@ const useStore = create<any>(set => ({
 
   hideExploreDropdown: true,
   toggleExploreDropdown: () =>
-    set(state => ({ hideExploreDropdown: !state.hideExploreDropdown }))
+    set(state => ({ hideExploreDropdown: !state.hideExploreDropdown })),
+
+  // DARK THEME
+
+  darkTheme: false,
+  toggleDarkTheme: () => set(state => ({ darkTheme: !state.darkTheme })),
+
+  // DRAGGING
+
+  isDragging: false,
+  setIsDragging: (val: boolean) => set(() => ({ isDragging: val })),
+
+  draggingElement: null,
+  setDraggingElement: (index: number) =>
+    set(() => ({ draggingElement: index })),
+
+  dragOverElement: null,
+  setDragOverElement: (index: number) => set(() => ({ dragOverElement: index }))
 }));
 
 export default useStore;

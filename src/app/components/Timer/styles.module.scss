@@ -17,6 +17,8 @@
 }
 
 .name {
+  width: 100%;
+
   font-size: 13px;
   color: var(--white-clr);
 
@@ -91,7 +93,13 @@
   }
 }
 
+//
+
 .disabled {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.dragOver {
+  opacity: 0.5;
 }

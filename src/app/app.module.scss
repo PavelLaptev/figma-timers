@@ -14,8 +14,8 @@
 }
 
 .app {
-  position: relative;
   height: 100%;
+  position: relative;
   padding: 20px 16px;
   background-color: var(--neutral-dark-clr);
 }
@@ -26,19 +26,21 @@
   margin-bottom: 22px;
   &_title {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
   &_buttons {
     display: flex;
-    margin-left: 20px;
+    margin-bottom: 12px;
+    // margin-left: 20px;
   }
   &_dropdownWrap {
     z-index: 99;
     position: relative;
   }
   button {
-    margin-left: 4px;
+    margin-right: 4px;
   }
   h1 {
     font-size: 18px;
@@ -80,6 +82,10 @@
 .timersList {
   display: flex;
   flex-direction: column;
+}
+
+.addTimer {
+  width: 100%;
 }
 
 .dimBackground {

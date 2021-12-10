@@ -3,7 +3,6 @@ import writeToStorage from "../../utils/writeToStorage";
 import useStore from "../../useStore";
 
 import Icon from "../Icon";
-import Switcher from "../Switcher";
 
 import styles from "./styles.module.scss";
 
@@ -48,7 +47,12 @@ const Timer = (props: TimerItemProps) => {
     setConfigMinutes,
     setConfigSeconds,
     setConfigTimerName,
-    setConfigSkip
+    isDragging,
+    setIsDragging,
+    draggingElement,
+    setDraggingElement,
+    dragOverElement,
+    setDragOverElement
   } = useStore();
 
   ////////////////////////
@@ -125,19 +129,35 @@ const Timer = (props: TimerItemProps) => {
       timers: config.timers.filter((_, index) => index !== props.index)
     };
 
-    if (newConfig.timers.length < 2) {
-      setConfigSkip(false, 0);
-      console.log("Timer is over");
-    }
-
     setConfig(newConfig);
     writeToStorage(newConfig);
     setNowPlaying(0);
   };
 
-  const handleSkipTimer = () => {
-    setNowPlaying(0);
-    setConfigSkip(!config.timers[props.index].skip, props.index);
+  const handleTimeIncrease = () => {
+    const joinedTime =
+      Number(config.timers[props.index].time.minutes) * 60 +
+      Number(config.timers[props.index].time.seconds);
+    const joinedTimePlusTenSec = joinedTime + 10;
+
+    if (joinedTimePlusTenSec < 0) return;
+
+    setConfigMinutes(Math.floor(joinedTimePlusTenSec / 60), props.index);
+    setConfigSeconds(joinedTimePlusTenSec % 60, props.index);
+    writeToStorage(config);
+  };
+
+  const handleTimeDecrease = () => {
+    const joinedTime =
+      Number(config.timers[props.index].time.minutes) * 60 +
+      Number(config.timers[props.index].time.seconds);
+    const joinedTimeMinusTenSec = joinedTime - 10;
+
+    if (joinedTimeMinusTenSec < 0) return;
+
+    setConfigMinutes(Math.floor(joinedTimeMinusTenSec / 60), props.index);
+    setConfigSeconds(joinedTimeMinusTenSec % 60, props.index);
+    writeToStorage(config);
   };
 
   ////////////////////////
@@ -171,11 +191,44 @@ const Timer = (props: TimerItemProps) => {
   };
 
   ////////////////////////
+  ///////// DRAG /////////
+  ////////////////////////
+
+  const handleDragStart = () => {
+    setDraggingElement(props.index);
+    console.log(props.index);
+    setIsDragging(true);
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+
+    const currentTimers = [...config.timers];
+    const [draggedTimer] = currentTimers.splice(draggingElement, 1);
+    currentTimers.splice(dragOverElement, 0, draggedTimer);
+
+    setConfig({ ...config, timers: currentTimers });
+  };
+
+  const handleDragEnter = e => {
+    e.preventDefault();
+    setDragOverElement(props.index);
+  };
+
+  ////////////////////////
   //////// RENDER ////////
   ////////////////////////
 
   return (
-    <section className={`${styles.timer} ${isPlaying ? styles.disabled : ""}`}>
+    <section
+      draggable
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+      onDragEnter={handleDragEnter}
+      // onDragOver={handleDragOver}
+      // onDrop={handleDrop}
+      className={`${styles.timer} ${isPlaying ? styles.disabled : ""} ${""}`}
+    >
       <section className={styles.header}>
         <input
           className={styles.name}
@@ -220,17 +273,17 @@ const Timer = (props: TimerItemProps) => {
         </div>
 
         <section className={styles.timeButtons}>
-          <div
-            className={`${styles.button} ${
-              config.timers.length < 2 ? styles.disabled : ""
-            }`}
-            onClick={handleSkipTimer}
-          >
-            <Switcher index={props.index} />
+          <div className={`${styles.button}`}>
+            <div onClick={handleTimeIncrease}>
+              <Icon name="plus-small" />
+            </div>
+            <div onClick={handleTimeDecrease}>
+              <Icon name="minus" />
+            </div>
           </div>
           <div
             className={`${styles.button} ${
-              config.timers.length < 2 ? styles.disabled : ""
+              config.timers.length === 1 ? styles.disabled : ""
             }`}
             onClick={handleDeleteTimer}
           >
