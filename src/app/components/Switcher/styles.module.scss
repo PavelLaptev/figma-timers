@@ -1,0 +1,26 @@
+.switcher {
+  position: relative;
+  background: var(--black-clr);
+  width: 24px;
+  height: 14px;
+  border-radius: 100px;
+  transition: all 0.1s ease-in-out;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 100px;
+    background: var(--white-clr);
+    transition: all 0.1s ease-in-out;
+  }
+}
+
+.active {
+  background: #01b489;
+  &::before {
+    left: calc(100% - 14px);
+  }
+}

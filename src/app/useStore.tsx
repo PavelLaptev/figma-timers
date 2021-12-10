@@ -22,6 +22,8 @@ const useStore = create<any>(set => ({
     set(state => (state.config.timers[index].time.minutes = Number(minutes))),
   setConfigSeconds: (seconds, index) =>
     set(state => (state.config.timers[index].time.seconds = Number(seconds))),
+  setConfigSkip: (skip, index) =>
+    set(state => (state.config.timers[index].skip = skip)),
 
   nowPlaying: 0,
   setNowPlaying: (index: number) => set(() => ({ nowPlaying: index })),

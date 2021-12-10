@@ -3,9 +3,10 @@
   flex-direction: column;
   background-color: var(--neutral-middle-clr);
   border-radius: var(--radius-m);
-  padding: 12px 16px;
+  padding: 12px;
   margin-bottom: 8px;
   box-shadow: var(--shadow-m);
+  transition: all 0.15s ease-in-out;
 }
 
 //
@@ -29,6 +30,8 @@
 .body {
   position: relative;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .time {
@@ -42,12 +45,12 @@
   &_input {
     user-select: none;
     padding-bottom: 3px;
-    height: 36px;
-    width: 40px;
+    height: 38px;
+    width: 44px;
     border-radius: 6px;
     background: transparent;
 
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 700;
     text-align: center;
     color: var(--white-clr);
@@ -68,10 +71,24 @@
   }
 }
 
-.timePlaceholder {
-  user-select: none;
-  pointer-events: none;
-  position: absolute;
+.timeButtons {
+  display: flex;
+}
+
+.button {
+  margin-left: 6px;
+  padding: 8px;
+  height: 34px;
+  min-width: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--white-opacity-10-clr);
+  border-radius: var(--radius-m);
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    border: 2px solid var(--white-opacity-20-clr);
+  }
 }
 
 .disabled {

@@ -36,13 +36,17 @@
   border-radius: var(--radius-m);
   padding: 10px;
   margin-bottom: 8px;
+  transition: all 0.1s ease-in-out;
   &:last-child {
     margin-bottom: 0;
   }
 }
 
 .linkButton {
-  border: 2px solid var(--neutral-light-clr);
+  border: 2px solid var(--white-opacity-10-clr);
+  &:hover {
+    border-color: var(--white-opacity-20-clr);
+  }
 }
 
 .suggest {

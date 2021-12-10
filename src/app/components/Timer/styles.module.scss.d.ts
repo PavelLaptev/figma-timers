@@ -2,11 +2,12 @@
 // Please do not change this file!
 interface CssExports {
   'body': string;
+  'button': string;
   'disabled': string;
   'header': string;
   'name': string;
   'time': string;
-  'timePlaceholder': string;
+  'timeButtons': string;
   'time_divider': string;
   'time_input': string;
   'timer': string;

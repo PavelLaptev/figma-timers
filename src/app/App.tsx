@@ -46,14 +46,15 @@ const App = ({}) => {
 
   const {
     config,
+    setConfig,
     isPlaying,
     setIsPlaying,
-    setConfig,
     resetTimers,
     setConfigName,
     setConfigDescription,
     hideExploreDropdown,
-    toggleExploreDropdown
+    toggleExploreDropdown,
+    setConfigSkip
   } = useStore();
 
   ////////////////////////////

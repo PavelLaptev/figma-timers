@@ -2,7 +2,14 @@ import * as React from "react";
 import writeToStorage from "../../utils/writeToStorage";
 import useStore from "../../useStore";
 
+import Icon from "../Icon";
+import Switcher from "../Switcher";
+
 import styles from "./styles.module.scss";
+
+////////////////////////
+//////// AUDIO /////////
+////////////////////////
 
 const minorAudio = new Audio(
   "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak-3s.mp3"
@@ -25,9 +32,14 @@ interface TimerItemProps {
   lastTimer: boolean;
 }
 
+////////////////////////
+////////////////////////
+////////////////////////
+
 const Timer = (props: TimerItemProps) => {
   const {
     config,
+    setConfig,
     isPlaying,
     nowPlaying,
     setIsPlaying,
@@ -35,7 +47,8 @@ const Timer = (props: TimerItemProps) => {
     setConfigTime,
     setConfigMinutes,
     setConfigSeconds,
-    setConfigTimerName
+    setConfigTimerName,
+    setConfigSkip
   } = useStore();
 
   ////////////////////////
@@ -78,6 +91,7 @@ const Timer = (props: TimerItemProps) => {
 
       // Run the interval for the timer
       const intervalId = setInterval(() => {
+        if (config.timers[props.index].skip) setNowPlaying(props.index + 1);
         setConfigTime(splittedTime);
         // If the tied is over switch to the next timer
       }, 1000);
@@ -87,7 +101,6 @@ const Timer = (props: TimerItemProps) => {
       };
     }
   }, [
-    config,
     config.timers[props.index].time,
     isPlaying,
     nowPlaying,
@@ -97,43 +110,59 @@ const Timer = (props: TimerItemProps) => {
     setConfigSeconds
   ]);
 
+  ////////////////////////
+  ////////////////////////
+  ////////////////////////
+
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfigTimerName(e.target.value, props.index);
     writeToStorage(config);
+  };
+
+  const handleDeleteTimer = () => {
+    const newConfig = {
+      ...config,
+      timers: config.timers.filter((_, index) => index !== props.index)
+    };
+
+    if (newConfig.timers.length < 2) {
+      setConfigSkip(false, 0);
+      console.log("Timer is over");
+    }
+
+    setConfig(newConfig);
+    writeToStorage(newConfig);
+    setNowPlaying(0);
+  };
+
+  const handleSkipTimer = () => {
+    setNowPlaying(0);
+    setConfigSkip(!config.timers[props.index].skip, props.index);
   };
 
   ////////////////////////
   //// TIME HANDLERS /////
   ////////////////////////
 
-  const reduceTo60 = (str: string) => {
-    if (Number(str) > 60) return "60";
-    return str;
-  };
-
-  const reduceTo59 = (str: string) => {
-    if (Number(str) >= 60) return "59";
-    return str;
-  };
-
-  const setNumbersOnly = (str: string) => {
+  const setNumbersOnly = (str: string, type: "min" | "sec") => {
     const regex = /[^0-9]/g;
 
-    if (str.length > 2) {
-      return str.slice(-1).replace(regex, str);
-    }
+    if (str.length > 2) return str.slice(-1).replace(regex, str);
+    if (Number(str) > 60 && type === "min") return "60";
+    if (Number(str) > 59 && type === "sec") return "59";
+
     return str.replace(regex, "");
   };
 
   const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNowPlaying(0);
-    setConfigMinutes(setNumbersOnly(reduceTo60(e.target.value)), props.index);
+    setConfigMinutes(setNumbersOnly(e.target.value, "min"), props.index);
     writeToStorage(config);
   };
 
   const handleSecondsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNowPlaying(0);
-    setConfigSeconds(setNumbersOnly(reduceTo59(e.target.value)), props.index);
+    setConfigSeconds(setNumbersOnly(e.target.value, "sec"), props.index);
     writeToStorage(config);
   };
 
@@ -167,8 +196,8 @@ const Timer = (props: TimerItemProps) => {
             style={{
               width:
                 String(config.timers[props.index].time.minutes).length > 1
-                  ? "42px"
-                  : "24px"
+                  ? "44px"
+                  : "26px"
             }}
           />
 
@@ -184,11 +213,30 @@ const Timer = (props: TimerItemProps) => {
             style={{
               width:
                 String(config.timers[props.index].time.seconds).length > 1
-                  ? "42px"
-                  : "24px"
+                  ? "44px"
+                  : "26px"
             }}
           />
         </div>
+
+        <section className={styles.timeButtons}>
+          <div
+            className={`${styles.button} ${
+              config.timers.length < 2 ? styles.disabled : ""
+            }`}
+            onClick={handleSkipTimer}
+          >
+            <Switcher index={props.index} />
+          </div>
+          <div
+            className={`${styles.button} ${
+              config.timers.length < 2 ? styles.disabled : ""
+            }`}
+            onClick={handleDeleteTimer}
+          >
+            <Icon name="bin" />
+          </div>
+        </section>
       </section>
     </section>
   );
