@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cousine:wght@400;700&family=IBM+Plex+Sans:wght@400;600;700&family=Inter:wght@400;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap");
 
 :root {
   --accent-clr: #f45;
@@ -22,6 +22,14 @@
 *::selection {
   color: var(--white-clr);
   background-color: var(--selection-clr);
+}
+
+*::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+*::-webkit-scrollbar-thumb {
+  background: none;
 }
 
 body {

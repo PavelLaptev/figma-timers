@@ -5,6 +5,7 @@ import styles from "./app.module.scss";
 import writeToStorage from "./utils/writeToStorage";
 
 import ExploreDropdown from "./components/ExploreDropdown";
+import Resizer from "./components/Resizer";
 import Button from "./components/Button";
 import Timer from "./components/Timer";
 
@@ -98,6 +99,7 @@ const App = ({}) => {
   };
 
   const handleSelectTemplate = template => {
+    toggleExploreDropdown();
     setInitialConfig(template);
     writeToStorage(template);
   };
@@ -128,6 +130,7 @@ const App = ({}) => {
   ///////////////////////////
   return config ? (
     <div className={`${styles.darkTheme} ${styles.app}`}>
+      <Resizer />
       <div
         className={`${styles.dimBackground} ${
           hideExploreDropdown ? styles.hide : ""

@@ -12,11 +12,11 @@
 
 .header {
   display: flex;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .name {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--white-clr);
 
   outline: none;
@@ -41,15 +41,14 @@
   }
   &_input {
     user-select: none;
-    padding-top: 3px;
+    padding-bottom: 3px;
     height: 36px;
     width: 40px;
     border-radius: 6px;
     background: transparent;
 
-    font-family: "Cousine", monospace;
-    font-size: 30px;
-    font-weight: 400;
+    font-size: 26px;
+    font-weight: 700;
     text-align: center;
     color: var(--white-clr);
 

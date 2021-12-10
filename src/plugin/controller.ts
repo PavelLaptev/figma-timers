@@ -3,7 +3,11 @@
 ////////////////////////////////////////////////////////////////
 
 // Show UI
-figma.showUI(__html__, { width: 360, height: 700 });
+let UISize = {
+  width: 320,
+  height: 700
+};
+figma.showUI(__html__, UISize);
 
 // Clear the storage
 // figma.clientStorage.setAsync("timer-config", void 0);
@@ -23,4 +27,6 @@ figma.ui.onmessage = async msg => {
     // console.log("to storage:", msg.data);
     figma.clientStorage.setAsync("timer-config", JSON.stringify(msg.data));
   }
+
+  if (msg.type === "resize") figma.ui.resize(UISize.width, msg.size);
 };

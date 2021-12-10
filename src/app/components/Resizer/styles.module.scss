@@ -1,0 +1,11 @@
+.resizerVertical {
+  z-index: 99;
+  cursor: ns-resize;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 6px;
+  width: 100%;
+  transition: all 0.1s ease;
+  // background-color: rgb(167, 82, 82);
+}
