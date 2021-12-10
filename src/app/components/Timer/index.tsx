@@ -47,7 +47,6 @@ const Timer = (props: TimerItemProps) => {
     setConfigMinutes,
     setConfigSeconds,
     setConfigTimerName,
-    isDragging,
     setIsDragging,
     draggingElement,
     setDraggingElement,
@@ -200,14 +199,16 @@ const Timer = (props: TimerItemProps) => {
     setIsDragging(true);
   };
 
-  const handleDragEnd = () => {
+  const handleDragEnd = e => {
+    e.preventDefault();
+    setNowPlaying(0);
     setIsDragging(false);
 
-    const currentTimers = [...config.timers];
-    const [draggedTimer] = currentTimers.splice(draggingElement, 1);
-    currentTimers.splice(dragOverElement, 0, draggedTimer);
+    const rearangedTimers = [...config.timers];
+    const [draggedTimer] = rearangedTimers.splice(draggingElement, 1);
+    rearangedTimers.splice(dragOverElement, 0, draggedTimer);
 
-    setConfig({ ...config, timers: currentTimers });
+    setConfig({ ...config, timers: rearangedTimers });
   };
 
   const handleDragEnter = e => {
@@ -227,7 +228,7 @@ const Timer = (props: TimerItemProps) => {
       onDragEnter={handleDragEnter}
       // onDragOver={handleDragOver}
       // onDrop={handleDrop}
-      className={`${styles.timer} ${isPlaying ? styles.disabled : ""} ${""}`}
+      className={`${styles.timer} ${isPlaying ? styles.disabled : ""}`}
     >
       <section className={styles.header}>
         <input
