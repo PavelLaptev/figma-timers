@@ -5,6 +5,7 @@ interface CssExports {
   'button': string;
   'disabled': string;
   'dragOver': string;
+  'dragThumb': string;
   'header': string;
   'name': string;
   'time': string;

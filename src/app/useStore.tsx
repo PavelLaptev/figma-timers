@@ -43,14 +43,6 @@ const useStore = create<any>(set => ({
   isDragging: false,
   setIsDragging: (val: boolean) => set(() => ({ isDragging: val })),
 
-  draggingElement: null,
-  setDraggingElement: (index: number) =>
-    set(() => ({ draggingElement: index })),
-
-  dragOverElement: null,
-  setDragOverElement: (index: number) =>
-    set(() => ({ dragOverElement: index })),
-
   // SOUND
 
   muteSound: false,

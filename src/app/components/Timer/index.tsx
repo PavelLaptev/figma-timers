@@ -14,12 +14,14 @@ const minorAudio = new Audio(
   "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak-3s.mp3"
 );
 minorAudio.load();
-minorAudio.volume = 0.4;
+minorAudio.volume = 0.6;
+
 const majorAudio0 = new Audio(
   "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak-3s.mp3"
 );
 majorAudio0.load();
-majorAudio0.volume = 0.4;
+majorAudio0.volume = 0.6;
+
 const majorAudio1 = new Audio(
   "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/final1.mp3"
 );
@@ -27,6 +29,7 @@ majorAudio1.load();
 majorAudio1.volume = 0.4;
 
 interface TimerItemProps {
+  initialConfig: ConfigProps;
   index: number;
   lastTimer: boolean;
 }
@@ -46,12 +49,7 @@ const Timer = (props: TimerItemProps) => {
     setConfigTime,
     setConfigMinutes,
     setConfigSeconds,
-    setConfigTimerName,
-    setIsDragging,
-    draggingElement,
-    setDraggingElement,
-    dragOverElement,
-    setDragOverElement
+    setConfigTimerName
   } = useStore();
 
   ////////////////////////
@@ -117,8 +115,8 @@ const Timer = (props: TimerItemProps) => {
   ////////////////////////
   ////////////////////////
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfigTimerName(e.target.value, props.index);
+  const handleNameChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setConfigTimerName(e.target.innerText, props.index);
     writeToStorage(config);
   };
 
@@ -159,9 +157,9 @@ const Timer = (props: TimerItemProps) => {
     writeToStorage(config);
   };
 
-  ////////////////////////
-  //// TIME HANDLERS /////
-  ////////////////////////
+  ///////////////////////
+  //// TIME HANDLERS ////
+  ///////////////////////
 
   const setNumbersOnly = (str: string, type: "min" | "sec") => {
     const regex = /[^0-9]/g;
@@ -190,52 +188,27 @@ const Timer = (props: TimerItemProps) => {
   };
 
   ////////////////////////
-  ///////// DRAG /////////
+  ///////// SORT /////////
   ////////////////////////
-
-  const handleDragStart = () => {
-    setDraggingElement(props.index);
-    console.log(props.index);
-    setIsDragging(true);
-  };
-
-  const handleDragEnd = e => {
-    e.preventDefault();
-    setNowPlaying(0);
-    setIsDragging(false);
-
-    const rearangedTimers = [...config.timers];
-    const [draggedTimer] = rearangedTimers.splice(draggingElement, 1);
-    rearangedTimers.splice(dragOverElement, 0, draggedTimer);
-
-    setConfig({ ...config, timers: rearangedTimers });
-  };
-
-  const handleDragEnter = e => {
-    e.preventDefault();
-    setDragOverElement(props.index);
-  };
 
   ////////////////////////
   //////// RENDER ////////
   ////////////////////////
 
   return (
-    <section
-      draggable
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-      onDragEnter={handleDragEnter}
-      // onDragOver={handleDragOver}
-      // onDrop={handleDrop}
-      className={`${styles.timer} ${isPlaying ? styles.disabled : ""}`}
-    >
+    <section className={`${styles.timer} ${isPlaying ? styles.disabled : ""}`}>
       <section className={styles.header}>
-        <input
+        <span
+          contentEditable
+          suppressContentEditableWarning
           className={styles.name}
-          onChange={handleNameChange}
-          value={config.timers[props.index].name}
-        />
+          onInput={handleNameChange}
+        >
+          {props.initialConfig.timers[props.index].name}
+        </span>
+        <div className={styles.dragThumb}>
+          <Icon name="grab" />
+        </div>
       </section>
 
       <section className={styles.body}>

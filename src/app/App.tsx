@@ -27,7 +27,7 @@ const App = ({}) => {
         skip: false
       },
       {
-        name: "Think about your own configuration",
+        name: "Play around",
         time: {
           minutes: 1,
           seconds: 0
@@ -235,6 +235,7 @@ const App = ({}) => {
         {config.timers.map((_, index) => {
           return (
             <Timer
+              initialConfig={initialConfig}
               key={`timer-${index}`}
               index={index}
               lastTimer={index === config.timers.length - 1}

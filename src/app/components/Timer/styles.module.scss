@@ -17,7 +17,9 @@
 }
 
 .name {
+  height: auto;
   width: 100%;
+  margin-right: 16px;
 
   font-size: 13px;
   color: var(--white-clr);
@@ -25,6 +27,7 @@
   outline: none;
   border: none;
   background: none;
+  resize: none;
 }
 
 //
@@ -91,6 +94,14 @@
   &:hover {
     border: 2px solid var(--white-opacity-20-clr);
   }
+}
+
+//
+
+.dragThumb {
+  cursor: grab;
+  opacity: 0.5;
+  transform: scale(0.8);
 }
 
 //
