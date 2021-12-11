@@ -6,7 +6,7 @@
   padding: 12px;
   margin-bottom: 8px;
   box-shadow: var(--shadow-m);
-  transition: all 0.15s ease-in-out;
+  // transition: all 0.15s ease-in-out;
 }
 
 //
@@ -99,18 +99,25 @@
 //
 
 .dragThumb {
-  cursor: grab;
+  display: flex;
+}
+
+.sortIcon {
   opacity: 0.5;
-  transform: scale(0.8);
+  fill: var(--white-clr);
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 //
 
+.hide {
+  display: none;
+}
+
 .disabled {
   opacity: 0.5;
   pointer-events: none;
-}
-
-.dragOver {
-  opacity: 0.5;
 }

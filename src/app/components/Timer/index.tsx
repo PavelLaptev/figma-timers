@@ -2,9 +2,32 @@ import * as React from "react";
 import writeToStorage from "../../utils/writeToStorage";
 import useStore from "../../useStore";
 
+import moveArrayItem from "../../utils/moveArrayItem";
+
 import Icon from "../Icon";
 
 import styles from "./styles.module.scss";
+
+const SortIcon = props => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      transform={`rotate(${props.rotate ? 180 : 0})`}
+      className={`${styles.sortIcon} ${props.className}`}
+      onClick={props.onClick}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M6.99995 10.0858V3H8.99995V10.0858L10.7928 8.29289L12.2071 9.70711L7.99995 13.9142L3.79285 9.70711L5.20706 8.29289L6.99995 10.0858Z"
+      />
+    </svg>
+  );
+};
 
 ////////////////////////
 //////// AUDIO /////////
@@ -49,7 +72,8 @@ const Timer = (props: TimerItemProps) => {
     setConfigTime,
     setConfigMinutes,
     setConfigSeconds,
-    setConfigTimerName
+    setConfigTimerName,
+    setTimers
   } = useStore();
 
   ////////////////////////
@@ -92,7 +116,6 @@ const Timer = (props: TimerItemProps) => {
 
       // Run the interval for the timer
       const intervalId = setInterval(() => {
-        if (config.timers[props.index].skip) setNowPlaying(props.index + 1);
         setConfigTime(splittedTime);
         // If the tied is over switch to the next timer
       }, 1000);
@@ -191,6 +214,14 @@ const Timer = (props: TimerItemProps) => {
   ///////// SORT /////////
   ////////////////////////
 
+  const moveTimerUp = () => {
+    setTimers(moveArrayItem(config.timers, props.index, props.index - 1));
+  };
+
+  const moveTimerDown = () => {
+    setTimers(moveArrayItem(config.timers, props.index, props.index + 1));
+  };
+
   ////////////////////////
   //////// RENDER ////////
   ////////////////////////
@@ -207,7 +238,17 @@ const Timer = (props: TimerItemProps) => {
           {props.initialConfig.timers[props.index].name}
         </span>
         <div className={styles.dragThumb}>
-          <Icon name="grab" />
+          <SortIcon
+            className={
+              props.index === config.timers.length - 1 ? styles.hide : ""
+            }
+            onClick={moveTimerDown}
+          />
+          <SortIcon
+            rotate
+            className={props.index === 0 ? styles.hide : ""}
+            onClick={moveTimerUp}
+          />
         </div>
       </section>
 

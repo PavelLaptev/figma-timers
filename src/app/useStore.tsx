@@ -4,6 +4,7 @@ const useStore = create<any>(set => ({
   config: null,
 
   setConfig: (config: ConfigProps) => set(state => ({ ...state, config })),
+  setTimers: timers => set(state => ({ ...state, timers })),
   resetTimers: (timers: Array<TimerConfigProps>) =>
     set(state => {
       state.nowPlaying = 0;

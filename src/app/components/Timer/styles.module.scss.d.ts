@@ -4,10 +4,11 @@ interface CssExports {
   'body': string;
   'button': string;
   'disabled': string;
-  'dragOver': string;
   'dragThumb': string;
   'header': string;
+  'hide': string;
   'name': string;
+  'sortIcon': string;
   'time': string;
   'timeButtons': string;
   'time_divider': string;
