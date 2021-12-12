@@ -1,0 +1,38 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 14px;
+  color: var(--white-clr);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 8px;
+}
+
+.body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons {
+  display: flex;
+}
+
+.time {
+  display: flex;
+  &_divider {
+    color: var(--white-clr);
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 2px;
+  }
+  &_item {
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--white-clr);
+  }
+}

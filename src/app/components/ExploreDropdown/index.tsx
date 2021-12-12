@@ -71,4 +71,8 @@ const ExploreDropdown = (props: Props) => {
   );
 };
 
+ExploreDropdown.defaultProps = {
+  className: ""
+};
+
 export default ExploreDropdown;

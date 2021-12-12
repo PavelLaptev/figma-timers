@@ -1,6 +1,7 @@
 import * as React from "react";
 import useStore from "./useStore";
 
+import globalStyles from "./styles/base.scss";
 import styles from "./app.module.scss";
 
 import writeToStorage from "./utils/writeToStorage";
@@ -9,41 +10,44 @@ import ExploreDropdown from "./components/ExploreDropdown";
 import Resizer from "./components/Resizer";
 import Button from "./components/Button";
 import Timer from "./components/Timer";
+import ShortView from "./components/ShortView";
 
 console.clear();
 
+const initialState = {
+  name: `Welcome to Timers ⏰`,
+  description: `Use Timers when you need to divide a large task into smaller pieces and keep within the time frame of each one. Create your own timers or use templates. You can edit this text, the main name and even suggest your own timers. The plugin also has AutoSave feature. Have fun!`,
+  sound: false,
+  timers: [
+    {
+      name: "Read the description",
+      time: {
+        minutes: 0,
+        seconds: 20
+      },
+      skip: false
+    },
+    {
+      name: "Play around",
+      time: {
+        minutes: 1,
+        seconds: 0
+      },
+      skip: false
+    },
+    {
+      name: "Leave a like",
+      time: {
+        minutes: 0,
+        seconds: 15
+      },
+      skip: false
+    }
+  ]
+} as ConfigProps;
+
 const App = ({}) => {
-  const [initialConfig, setInitialConfig] = React.useState({
-    name: `Welcome to Timers ⏰`,
-    description: `Use Timers when you need to divide a large task into smaller pieces and keep within the time frame of each one. Create your own timers or use templates. You can edit this text, the main name and even suggest your own timers. The plugin also has AutoSave feature. Have fun!`,
-    sound: false,
-    timers: [
-      {
-        name: "Read the description",
-        time: {
-          minutes: 0,
-          seconds: 20
-        },
-        skip: false
-      },
-      {
-        name: "Play around",
-        time: {
-          minutes: 1,
-          seconds: 0
-        },
-        skip: false
-      },
-      {
-        name: "Leave a like",
-        time: {
-          minutes: 0,
-          seconds: 15
-        },
-        skip: false
-      }
-    ]
-  } as ConfigProps);
+  const [initialConfig, setInitialConfig] = React.useState(null);
 
   const {
     config,
@@ -54,16 +58,17 @@ const App = ({}) => {
     setConfigName,
     setConfigDescription,
     hideExploreDropdown,
-    toggleExploreDropdown
+    toggleExploreDropdown,
+    setFrameSize,
+    setMuteSound,
+    isMuted,
+    isShort,
+    setIsShort
   } = useStore();
 
   ////////////////////////////
   ///// CONTROL BUTTONS //////
   ////////////////////////////
-  const handlePlay = () => {
-    setIsPlaying(!isPlaying);
-    writeToStorage(config);
-  };
 
   const handleReset = () => {
     resetTimers(initialConfig.timers);
@@ -123,9 +128,12 @@ const App = ({}) => {
   ///////////////////////////
   /////// USE EFFECT ////////
   ///////////////////////////
+
   React.useEffect(() => {
     document.body.classList.add(styles.darkTheme);
+  }, []);
 
+  React.useEffect(() => {
     onmessage = event => {
       console.log(event.data);
       if (
@@ -136,6 +144,13 @@ const App = ({}) => {
           JSON.parse(JSON.stringify(event.data.pluginMessage.data))
         );
       }
+
+      if (
+        event.data.pluginMessage.type === "read-from-storage" &&
+        !event.data.pluginMessage.data
+      ) {
+        setInitialConfig(initialState);
+      }
     };
 
     const configDeepCopy = JSON.parse(JSON.stringify(initialConfig));
@@ -144,111 +159,145 @@ const App = ({}) => {
   }, [initialConfig]);
 
   ///////////////////////////
+  /////////// REF ///////////
+  ///////////////////////////
+
+  const appRef = React.useCallback(
+    el => {
+      if (el !== null) {
+        let frameSize =
+          parseFloat(
+            window.getComputedStyle(el).getPropertyValue("padding-top")
+          ) * 2;
+
+        [...el.children].forEach(element => {
+          const style = window.getComputedStyle(element);
+
+          frameSize +=
+            element.clientHeight +
+            parseFloat(style.getPropertyValue("margin-bottom")) +
+            parseFloat(style.getPropertyValue("margin-top"));
+        });
+
+        setFrameSize(frameSize);
+      }
+    },
+    [config]
+  );
+
+  ///////////////////////////
   ///////// RENDER //////////
   ///////////////////////////
+
+  ///////////////////////////
+  ///////// RENDER //////////
+  ///////////////////////////
+
   return config ? (
     <div
+      ref={appRef}
       className={`${styles.app}`}
       style={{
         overflow: hideExploreDropdown ? "visible" : "hidden"
       }}
     >
-      <Resizer />
-
-      <ExploreDropdown
-        className={`${hideExploreDropdown ? styles.hide : ""}`}
-        onClick={handleSelectTemplate}
-      />
-
+      <ShortView />
       <div
-        className={`${styles.dimBackground} ${
-          hideExploreDropdown ? styles.hide : ""
-        }`}
-        onClick={toggleExploreDropdown}
-      />
+        style={{
+          display: isShort ? "none" : "block"
+        }}
+      >
+        <Resizer />
+        <div
+          className={`${styles.dimBackground} ${
+            hideExploreDropdown ? styles.hideBackground : ""
+          }`}
+          onClick={toggleExploreDropdown}
+        />
 
-      <section className={styles.header}>
-        <div className={styles.header_title}>
-          <div className={styles.header_buttons}>
-            <Button
-              icon={"save"}
-              size="small"
-              type="download"
-              file={{
-                content: config,
-                name: config.name
-              }}
-              onClick={handleSave}
-            />
-            <Button
-              type="upload"
-              icon={"load"}
-              size="small"
-              onFileUpload={handleFileUpload}
-            />
+        <section className={styles.header}>
+          <div className={styles.header_title}>
+            <div className={styles.header_buttons}>
+              <Button
+                icon={"save"}
+                size="small"
+                type="download"
+                file={{
+                  content: config,
+                  name: config.name
+                }}
+                onClick={handleSave}
+              />
+              <Button
+                type="upload"
+                icon={"load"}
+                size="small"
+                onFileUpload={handleFileUpload}
+              />
 
-            <Button
-              onClick={toggleExploreDropdown}
-              icon={"explore"}
-              size="small"
-            />
+              <div>
+                <ExploreDropdown
+                  className={`${hideExploreDropdown ? styles.hide : ""}`}
+                  onClick={handleSelectTemplate}
+                />
+                <Button
+                  onClick={toggleExploreDropdown}
+                  icon={"explore"}
+                  size="small"
+                />
+              </div>
+            </div>
+            <h1
+              contentEditable
+              suppressContentEditableWarning
+              onInput={haandleNameChange}
+            >
+              {initialConfig.name}
+            </h1>
           </div>
-          <h1
+          <p
             contentEditable
             suppressContentEditableWarning
-            onInput={haandleNameChange}
+            onInput={haandleDescriptionChange}
           >
-            {initialConfig.name}
-          </h1>
-        </div>
-        <p
-          contentEditable
-          suppressContentEditableWarning
-          onInput={haandleDescriptionChange}
-        >
-          {initialConfig.description}
-        </p>
-      </section>
-      <section className={styles.generalButtons}>
+            {initialConfig.description}
+          </p>
+        </section>
+        <section className={styles.generalButtons}>
+          <Button
+            onClick={() => setIsPlaying(!isPlaying)}
+            icon={isPlaying ? "pause" : "play"}
+            size="large"
+            className={isPlaying ? globalStyles.activeButton : ""}
+          />
+          <Button onClick={handleReset} icon="reset" size="large" />
+          <Button
+            onClick={setMuteSound}
+            icon={isMuted ? "sound-off" : "sound-on"}
+            size="large"
+            className={isMuted ? globalStyles.activeButton : ""}
+          />
+          <Button onClick={setIsShort} icon="fold" size="large" />
+        </section>
+        <section className={`${styles.timersList} timer-list`}>
+          {config.timers.map((_, index) => {
+            return (
+              <Timer
+                initialConfig={initialConfig}
+                key={`timer-${index}`}
+                index={index}
+                lastTimer={index === config.timers.length - 1}
+              />
+            );
+          })}
+        </section>
         <Button
-          onClick={handlePlay}
-          icon={isPlaying ? "pause" : "play"}
           size="large"
+          className={styles.addTimer}
+          icon="plus"
+          onClick={handleAddNewTimer}
         />
-        <Button onClick={handleReset} icon="reset" size="large" />
-        <Button
-          onClick={() => {
-            console.log("dummy");
-          }}
-          icon="mute"
-          size="large"
-        />
-        <Button
-          onClick={() => {
-            console.log("dummy");
-          }}
-          icon="fold"
-          size="large"
-        />
-      </section>
-      <section className={`${styles.timersList} timer-list`}>
-        {config.timers.map((_, index) => {
-          return (
-            <Timer
-              initialConfig={initialConfig}
-              key={`timer-${index}`}
-              index={index}
-              lastTimer={index === config.timers.length - 1}
-            />
-          );
-        })}
-      </section>
-      <Button
-        size="large"
-        className={styles.addTimer}
-        icon="plus"
-        onClick={handleAddNewTimer}
-      />
+      </div>
     </div>
   ) : (
     <div>Loading...</div>

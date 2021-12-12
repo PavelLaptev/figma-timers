@@ -42,7 +42,6 @@ const Button: React.FunctionComponent<Props> = props => {
     }
     if (props.type === "upload") {
       inputRef.current.click();
-      props.onClick(e);
     }
     if (props.onClick) {
       props.onClick(e);
@@ -57,7 +56,7 @@ const Button: React.FunctionComponent<Props> = props => {
   return props.type !== "upload" ? (
     <button
       onClick={handleClick}
-      className={`${styles.button} ${props.className} ${styles[props.size]} ${
+      className={`${props.className} ${styles.button} ${styles[props.size]} ${
         props.noHeight ? styles.noHeight : ""
       }`}
     >
@@ -65,7 +64,7 @@ const Button: React.FunctionComponent<Props> = props => {
       <Text />
     </button>
   ) : (
-    <div className={`${styles.wrap} ${props.className} ${styles[props.size]}`}>
+    <div className={`${props.className} ${styles.wrap} ${styles[props.size]}`}>
       <input
         type="file"
         onChange={handleFileUpload}
@@ -74,7 +73,7 @@ const Button: React.FunctionComponent<Props> = props => {
       />
       <button
         onClick={handleClick}
-        className={`${styles.button} ${props.className} ${styles[props.size]}`}
+        className={`${props.className} ${styles.button} ${styles[props.size]}`}
       >
         <BtnIcon />
         <Text />

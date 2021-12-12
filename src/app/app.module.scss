@@ -1,6 +1,4 @@
 .darkTheme {
-  --accent-ckr: #ff5050;
-
   --black-clr: #1b1b1b;
   --white-clr: #ffffff;
 
@@ -97,7 +95,12 @@
   background-color: var(--black-clr);
   opacity: 0.8;
   z-index: 1;
-  transition: all 0.1s ease-in-out;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.hideBackground {
+  opacity: 0;
+  height: 0;
 }
 
 .hide {

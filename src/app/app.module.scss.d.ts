@@ -11,6 +11,7 @@ interface CssExports {
   'header_dropdownWrap': string;
   'header_title': string;
   'hide': string;
+  'hideBackground': string;
   'timersList': string;
 }
 export const cssExports: CssExports;

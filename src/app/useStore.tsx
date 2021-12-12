@@ -39,15 +39,27 @@ const useStore = create<any>(set => ({
   darkTheme: false,
   toggleDarkTheme: () => set(state => ({ darkTheme: !state.darkTheme })),
 
-  // DRAGGING
-
-  isDragging: false,
-  setIsDragging: (val: boolean) => set(() => ({ isDragging: val })),
-
   // SOUND
 
-  muteSound: false,
-  setMuteSound: () => set(state => ({ muteSound: !state.muteSound }))
+  isMuted: false,
+  setMuteSound: () => set(state => ({ isMuted: !state.isMuted })),
+
+  // IS SHORT VERSION
+
+  isShort: false,
+  setIsShort: () => set(state => ({ isShort: !state.isShort })),
+
+  // FRAME SIZE
+
+  frameSize: 400,
+  setFrameSize: (size: number) =>
+    set(() => {
+      parent.postMessage(
+        { pluginMessage: { type: "write-size-to-storaage", size: size } },
+        "*"
+      );
+      return { frameSize: size };
+    })
 }));
 
 export default useStore;

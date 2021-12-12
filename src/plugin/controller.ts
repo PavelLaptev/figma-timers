@@ -5,7 +5,7 @@
 // Show UI
 let UISize = {
   width: 300,
-  height: 700
+  height: 470
 };
 figma.showUI(__html__, UISize);
 
@@ -29,4 +29,8 @@ figma.ui.onmessage = async msg => {
   }
 
   if (msg.type === "resize") figma.ui.resize(UISize.width, msg.size);
+
+  if (msg.type === "write-size-to-storaage") {
+    figma.ui.resize(UISize.width, msg.size);
+  }
 };

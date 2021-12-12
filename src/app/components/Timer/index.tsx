@@ -29,28 +29,6 @@ const SortIcon = props => {
   );
 };
 
-////////////////////////
-//////// AUDIO /////////
-////////////////////////
-
-const minorAudio = new Audio(
-  "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak-3s.mp3"
-);
-minorAudio.load();
-minorAudio.volume = 0.6;
-
-const majorAudio0 = new Audio(
-  "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak-3s.mp3"
-);
-majorAudio0.load();
-majorAudio0.volume = 0.6;
-
-const majorAudio1 = new Audio(
-  "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/final1.mp3"
-);
-majorAudio1.load();
-majorAudio1.volume = 0.4;
-
 interface TimerItemProps {
   initialConfig: ConfigProps;
   index: number;
@@ -73,8 +51,31 @@ const Timer = (props: TimerItemProps) => {
     setConfigMinutes,
     setConfigSeconds,
     setConfigTimerName,
-    setTimers
+    setTimers,
+    isMuted
   } = useStore();
+
+  ////////////////////////
+  //////// AUDIO /////////
+  ////////////////////////
+
+  const minorAudio = new Audio(
+    "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak-3s.mp3"
+  );
+  minorAudio.load();
+  minorAudio.volume = !isMuted ? 0.6 : 0;
+
+  const majorAudio0 = new Audio(
+    "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak-3s.mp3"
+  );
+  majorAudio0.load();
+  majorAudio0.volume = !isMuted ? 0.6 : 0;
+
+  const majorAudio1 = new Audio(
+    "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/final1.mp3"
+  );
+  majorAudio1.load();
+  majorAudio1.volume = !isMuted ? 0.4 : 0;
 
   ////////////////////////
   ////// USE EFFECT //////
@@ -138,8 +139,8 @@ const Timer = (props: TimerItemProps) => {
   ////////////////////////
   ////////////////////////
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setConfigTimerName(e.target.innerText, props.index);
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setConfigTimerName(e.target.value, props.index);
     writeToStorage(config);
   };
 
@@ -229,14 +230,11 @@ const Timer = (props: TimerItemProps) => {
   return (
     <section className={`${styles.timer} ${isPlaying ? styles.disabled : ""}`}>
       <section className={styles.header}>
-        <span
-          contentEditable
-          suppressContentEditableWarning
+        <input
           className={styles.name}
-          onInput={handleNameChange}
-        >
-          {props.initialConfig.timers[props.index].name}
-        </span>
+          onChange={handleNameChange}
+          value={config.timers[props.index].name}
+        />
         <div className={styles.dragThumb}>
           <SortIcon
             className={
