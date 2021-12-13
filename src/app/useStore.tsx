@@ -47,7 +47,26 @@ const useStore = create<any>(set => ({
   // IS SHORT VERSION
 
   isShort: false,
-  setIsShort: () => set(state => ({ isShort: !state.isShort })),
+  setIsShort: () =>
+    set(state => {
+      if (!state.isShort) {
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: "change-size-to-short",
+              size: { width: 240, height: 94 }
+            }
+          },
+          "*"
+        );
+      } else {
+        parent.postMessage(
+          { pluginMessage: { type: "change-size", size: state.frameSize } },
+          "*"
+        );
+      }
+      return { isShort: !state.isShort };
+    }),
 
   // FRAME SIZE
 
@@ -55,7 +74,7 @@ const useStore = create<any>(set => ({
   setFrameSize: (size: number) =>
     set(() => {
       parent.postMessage(
-        { pluginMessage: { type: "write-size-to-storaage", size: size } },
+        { pluginMessage: { type: "change-size", size: size } },
         "*"
       );
       return { frameSize: size };

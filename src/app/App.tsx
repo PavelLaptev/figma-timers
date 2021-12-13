@@ -196,12 +196,16 @@ const App = ({}) => {
   return config ? (
     <div
       ref={appRef}
-      className={`${styles.app}`}
+      className={`${styles.app} ${isShort ? styles.shortApp : ""}`}
       style={{
         overflow: hideExploreDropdown ? "visible" : "hidden"
       }}
     >
-      <ShortView />
+      <ShortView
+        style={{
+          display: !isShort ? "none" : "block"
+        }}
+      />
       <div
         style={{
           display: isShort ? "none" : "block"

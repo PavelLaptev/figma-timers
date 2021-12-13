@@ -12,6 +12,7 @@ interface CssExports {
   'header_title': string;
   'hide': string;
   'hideBackground': string;
+  'shortApp': string;
   'timersList': string;
 }
 export const cssExports: CssExports;

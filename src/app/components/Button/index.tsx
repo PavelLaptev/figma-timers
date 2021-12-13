@@ -15,6 +15,7 @@ interface Props {
     content: string;
     name: string;
   };
+  style?: React.CSSProperties;
   onClick?: (e) => void;
   onFileUpload?: (file) => void;
 }
@@ -56,6 +57,7 @@ const Button: React.FunctionComponent<Props> = props => {
   return props.type !== "upload" ? (
     <button
       onClick={handleClick}
+      style={props.style}
       className={`${props.className} ${styles.button} ${styles[props.size]} ${
         props.noHeight ? styles.noHeight : ""
       }`}

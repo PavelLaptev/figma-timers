@@ -30,7 +30,11 @@ figma.ui.onmessage = async msg => {
 
   if (msg.type === "resize") figma.ui.resize(UISize.width, msg.size);
 
-  if (msg.type === "write-size-to-storaage") {
+  if (msg.type === "change-size-to-short") {
+    figma.ui.resize(msg.size.width, msg.size.height);
+  }
+
+  if (msg.type === "change-size") {
     figma.ui.resize(UISize.width, msg.size);
   }
 };

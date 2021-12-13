@@ -4,12 +4,13 @@
 }
 
 .name {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--white-clr);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-bottom: 8px;
+  margin-top: 0;
+  margin-bottom: 12px;
 }
 
 .body {
@@ -19,6 +20,10 @@
 
 .buttons {
   display: flex;
+}
+
+.button {
+  margin-left: 4px;
 }
 
 .time {
