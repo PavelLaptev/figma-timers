@@ -54,7 +54,7 @@ const useStore = create<any>(set => ({
           {
             pluginMessage: {
               type: "change-size-to-short",
-              size: { width: 240, height: 94 }
+              size: { width: 248, height: 92 }
             }
           },
           "*"

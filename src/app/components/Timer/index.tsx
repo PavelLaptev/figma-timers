@@ -33,6 +33,10 @@ interface TimerItemProps {
   initialConfig: ConfigProps;
   index: number;
   lastTimer: boolean;
+  sound: {
+    middle: HTMLAudioElement;
+    end: HTMLAudioElement;
+  };
 }
 
 ////////////////////////
@@ -52,30 +56,8 @@ const Timer = (props: TimerItemProps) => {
     setConfigSeconds,
     setConfigTimerName,
     setTimers,
-    isMuted
+    resetTimers
   } = useStore();
-
-  ////////////////////////
-  //////// AUDIO /////////
-  ////////////////////////
-
-  const minorAudio = new Audio(
-    "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak-3s.mp3"
-  );
-  minorAudio.load();
-  minorAudio.volume = !isMuted ? 0.6 : 0;
-
-  const majorAudio0 = new Audio(
-    "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak-3s.mp3"
-  );
-  majorAudio0.load();
-  majorAudio0.volume = !isMuted ? 0.6 : 0;
-
-  const majorAudio1 = new Audio(
-    "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/final1.mp3"
-  );
-  majorAudio1.load();
-  majorAudio1.volume = !isMuted ? 0.4 : 0;
 
   ////////////////////////
   ////// USE EFFECT //////
@@ -104,14 +86,18 @@ const Timer = (props: TimerItemProps) => {
     // Chceck if it is playing and run only one timer
     if (isPlaying && nowPlaying === props.index) {
       // Play sound 5 seconds before end
-      if (joinedTime === 0 && !props.lastTimer) minorAudio.play();
-      if (joinedTime === 3 && props.lastTimer) majorAudio0.play();
-      if (joinedTime === 0 && props.lastTimer) majorAudio1.play();
+      if (joinedTime === 0 && !props.lastTimer) props.sound.middle.play();
+      if (joinedTime === 3 && props.lastTimer) props.sound.end.play();
+      if (joinedTime === 0 && props.lastTimer) props.sound.end.play();
 
       // if current time is not 0, next timer
       if (joinedTime === 0) {
         console.log("Timer is over");
-        setNowPlaying(props.index + 1);
+        if (config.timers.length > nowPlaying + 1) {
+          setNowPlaying(props.index + 1);
+        } else {
+          resetTimers(props.initialConfig.timers);
+        }
         return;
       }
 

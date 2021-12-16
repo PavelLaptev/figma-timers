@@ -6,7 +6,6 @@
   padding: 12px;
   margin-bottom: 8px;
   box-shadow: var(--shadow-m);
-  // transition: all 0.15s ease-in-out;
 }
 
 //
@@ -21,7 +20,8 @@
   width: 100%;
   margin-right: 16px;
 
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 700;
   color: var(--white-clr);
 
   outline: none;

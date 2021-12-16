@@ -66,6 +66,22 @@ const App = ({}) => {
     setIsShort
   } = useStore();
 
+  ////////////////////////
+  //////// AUDIO /////////
+  ////////////////////////
+
+  const middleSound = new Audio(
+    "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak-3s.mp3"
+  );
+  middleSound.load();
+  middleSound.volume = !isMuted ? 0.6 : 0;
+
+  const endSound = new Audio(
+    "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/final1.mp3"
+  );
+  endSound.load();
+  endSound.volume = !isMuted ? 0.4 : 0;
+
   ////////////////////////////
   ///// CONTROL BUTTONS //////
   ////////////////////////////
@@ -287,6 +303,7 @@ const App = ({}) => {
           {config.timers.map((_, index) => {
             return (
               <Timer
+                sound={{ middle: middleSound, end: endSound }}
                 initialConfig={initialConfig}
                 key={`timer-${index}`}
                 index={index}

@@ -4,18 +4,19 @@
 }
 
 .name {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--white-clr);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   margin-top: 0;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .body {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .buttons {
@@ -35,7 +36,7 @@
     margin: 0 2px;
   }
   &_item {
-    font-size: 30px;
+    font-size: 34px;
     font-weight: 700;
     text-align: center;
     color: var(--white-clr);
