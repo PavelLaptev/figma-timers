@@ -71,7 +71,7 @@
   },
   {
     "name": "🍅 Pomodoro",
-    "description": "Ask questions to specify the challenge. Ask about the users and their context. Write down the main steps of the story.",
+    "description": "The Pomodoro technique is a time management system that breaks down the workflow into a focus/work portion of 25 minutes and pauses between 5-15 minutes.",
     "sound": false,
     "timers": [
       {
@@ -85,7 +85,7 @@
       {
         "name": "Break",
         "time": {
-          "minutes": 5,
+          "minutes": 10,
           "seconds": 0
         },
         "skip": false
@@ -101,7 +101,7 @@
       {
         "name": "Break",
         "time": {
-          "minutes": 5,
+          "minutes": 10,
           "seconds": 0
         },
         "skip": false
