@@ -1,6 +1,6 @@
 [
   {
-    "name": "Welcome to Timers ⏰",
+    "name": "⏰ Welcome to Timers",
     "description": "Use Timers when you need to divide a large task into smaller pieces and keep within the time frame of each one. Create your own timers or use templates. You can edit this text, the main name and even suggest your own timers. The plugin also has AutoSave feature. Have fun! ⏰",
     "sound": false,
     "timers": [
@@ -31,7 +31,7 @@
     ]
   },
   {
-    "name": "Whiteboard Challange 📝",
+    "name": "📝 Whiteboard Challange",
     "description": "An 40 min exercise.The timer is broken down into parts that are worth paying attention to in order to successfully complete the task.",
     "sound": false,
     "timers": [
@@ -70,7 +70,7 @@
     ]
   },
   {
-    "name": "Pomodoro",
+    "name": "🍅 Pomodoro",
     "description": "Ask questions to specify the challenge. Ask about the users and their context. Write down the main steps of the story.",
     "sound": false,
     "timers": [
