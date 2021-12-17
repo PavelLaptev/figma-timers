@@ -2,7 +2,7 @@
   {
     "name": "⏰ Welcome to Timers",
     "description": "Use Timers when you need to divide a large task into smaller pieces and keep within the time frame of each one. Create your own timers or use templates. You can edit this text, the main name and even suggest your own timers. The plugin also has AutoSave feature. Have fun!",
-    "sound": false,
+    "isMuted": false,
     "timers": [
       {
         "name": "Read the description",
@@ -33,7 +33,7 @@
   {
     "name": "📝 Whiteboard Challange",
     "description": "30 min exercise. The timer is broken down into parts that are worth paying attention to in order to successfully complete the task.",
-    "sound": false,
+    "isMuted": false,
     "timers": [
       {
         "name": "About / Goals / Problems",
@@ -70,9 +70,40 @@
     ]
   },
   {
+    "name": "🗒 Whiteboard Challange by @sekeidesign",
+    "description": "20 min exercise by @sekeidesign. Duplicate the FigJam file https://www.figma.com/community/file/1027319420132010926/Whiteboard-Exercise-Template-(20min)",
+    "isMuted": false,
+    "timers": [
+      {
+        "name": "Goals / Constraints / HMW",
+        "time": {
+          "minutes": 5,
+          "seconds": 0
+        },
+        "skip": false
+      },
+      {
+        "name": "Users / Pains / Wins",
+        "time": {
+          "minutes": 5,
+          "seconds": 0
+        },
+        "skip": false
+      },
+      {
+        "name": "User Flow / Sketches",
+        "time": {
+          "minutes": 5,
+          "seconds": 0
+        },
+        "skip": false
+      },
+    ]
+  },
+  {
     "name": "🍅 Pomodoro",
     "description": "The Pomodoro technique is a time management system that breaks down the workflow into a focus/work portion of 25 minutes and pauses between 5-15 minutes.",
-    "sound": false,
+    "isMuted": false,
     "timers": [
       {
         "name": "Work",
