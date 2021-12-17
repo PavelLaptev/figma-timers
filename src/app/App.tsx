@@ -28,9 +28,9 @@ const endSound = new Audio(
 );
 
 const initialState = {
-  name: `Welcome to Timers ⏰`,
+  name: `⏰ Welcome to Timers`,
   description: `Use Timers when you need to divide a large task into smaller pieces and keep within the time frame of each one. Create your own timers or use templates. You can edit this text, the main name and even suggest your own timers. The plugin also has AutoSave feature. Have fun!`,
-  sound: false,
+  isMuted: false,
   timers: [
     {
       name: "Read the description",

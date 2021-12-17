@@ -12,7 +12,7 @@ declare global {
   interface ConfigProps {
     name: string;
     description: string;
-    sound: boolean;
+    isMuted: boolean;
     timers: Array<TimerConfigProps>;
   }
   type IconTypes =

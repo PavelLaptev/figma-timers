@@ -65,7 +65,7 @@ const ExploreDropdown = (props: Props) => {
         href={"https://github.com/PavelLaptev/figma-timers/tree/configs"}
         className={styles.suggest}
       >
-        Suggest template
+        ✨ Suggest template
       </LinkButton>
     </section>
   );
