@@ -11,8 +11,21 @@ import Resizer from "./components/Resizer";
 import Button from "./components/Button";
 import Timer from "./components/Timer";
 import ShortView from "./components/ShortView";
+import Loader from "./components/Loader";
 
 console.clear();
+
+////////////////////////
+//////// AUDIO /////////
+////////////////////////
+
+const middleSound = new Audio(
+  "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/microwave-sound.mp3"
+);
+
+const endSound = new Audio(
+  "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/final1.mp3"
+);
 
 const initialState = {
   name: `Welcome to Timers ⏰`,
@@ -65,22 +78,6 @@ const App = ({}) => {
     isShort,
     setIsShort
   } = useStore();
-
-  ////////////////////////
-  //////// AUDIO /////////
-  ////////////////////////
-
-  const middleSound = new Audio(
-    "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/tiktak-3s.mp3"
-  );
-  middleSound.load();
-  middleSound.volume = !isMuted ? 0.6 : 0;
-
-  const endSound = new Audio(
-    "https://github.com/PavelLaptev/figma-timers/raw/main/src/app/components/Timer/assets/final1.mp3"
-  );
-  endSound.load();
-  endSound.volume = !isMuted ? 0.4 : 0;
 
   ////////////////////////////
   ///// CONTROL BUTTONS //////
@@ -146,6 +143,13 @@ const App = ({}) => {
   ///////////////////////////
 
   React.useEffect(() => {
+    middleSound.volume = !isMuted ? 1 : 0;
+    endSound.volume = !isMuted ? 1 : 0;
+  }, [isMuted, setMuteSound]);
+
+  React.useEffect(() => {
+    middleSound.load();
+    endSound.load();
     document.body.classList.add(styles.darkTheme);
   }, []);
 
@@ -209,119 +213,123 @@ const App = ({}) => {
   ///////// RENDER //////////
   ///////////////////////////
 
-  return config ? (
-    <div
+  return (
+    <section
       ref={appRef}
       className={`${styles.app} ${isShort ? styles.shortApp : ""}`}
       style={{
         overflow: hideExploreDropdown ? "visible" : "hidden"
       }}
     >
-      <ShortView
-        style={{
-          display: !isShort ? "none" : "block"
-        }}
-      />
-      <div
-        style={{
-          display: isShort ? "none" : "block"
-        }}
-      >
-        <Resizer />
-        <div
-          className={`${styles.dimBackground} ${
-            hideExploreDropdown ? styles.hideBackground : ""
-          }`}
-          onClick={toggleExploreDropdown}
-        />
-
-        <section className={styles.header}>
-          <div className={styles.header_title}>
-            <div className={styles.header_buttons}>
-              <Button
-                icon={"save"}
-                size="small"
-                type="download"
-                file={{
-                  content: config,
-                  name: config.name
-                }}
-                onClick={handleSave}
-              />
-              <Button
-                type="upload"
-                icon={"load"}
-                size="small"
-                onFileUpload={handleFileUpload}
-              />
-
-              <div>
-                <ExploreDropdown
-                  className={`${hideExploreDropdown ? styles.hide : ""}`}
-                  onClick={handleSelectTemplate}
-                />
-                <Button
-                  onClick={toggleExploreDropdown}
-                  icon={"explore"}
-                  size="small"
-                />
-              </div>
-            </div>
-            <h1
-              contentEditable
-              suppressContentEditableWarning
-              onInput={haandleNameChange}
-            >
-              {initialConfig.name}
-            </h1>
-          </div>
-          <p
-            contentEditable
-            suppressContentEditableWarning
-            onInput={haandleDescriptionChange}
+      {config ? (
+        <>
+          <ShortView
+            style={{
+              display: !isShort ? "none" : "block"
+            }}
+          />
+          <div
+            style={{
+              display: isShort ? "none" : "block"
+            }}
           >
-            {initialConfig.description}
-          </p>
-        </section>
-        <section className={styles.generalButtons}>
-          <Button
-            onClick={() => setIsPlaying(!isPlaying)}
-            icon={isPlaying ? "pause" : "play"}
-            size="large"
-            className={isPlaying ? globalStyles.activeButton : ""}
-          />
-          <Button onClick={handleReset} icon="reset" size="large" />
-          <Button
-            onClick={setMuteSound}
-            icon={isMuted ? "sound-off" : "sound-on"}
-            size="large"
-            className={isMuted ? globalStyles.activeButton : ""}
-          />
-          <Button onClick={setIsShort} icon="fold" size="large" />
-        </section>
-        <section className={`${styles.timersList} timer-list`}>
-          {config.timers.map((_, index) => {
-            return (
-              <Timer
-                sound={{ middle: middleSound, end: endSound }}
-                initialConfig={initialConfig}
-                key={`timer-${index}`}
-                index={index}
-                lastTimer={index === config.timers.length - 1}
+            <Resizer />
+            <div
+              className={`${styles.dimBackground} ${
+                hideExploreDropdown ? styles.hideBackground : ""
+              }`}
+              onClick={toggleExploreDropdown}
+            />
+
+            <section className={styles.header}>
+              <div className={styles.header_title}>
+                <div className={styles.header_buttons}>
+                  <Button
+                    icon={"save"}
+                    size="small"
+                    type="download"
+                    file={{
+                      content: config,
+                      name: config.name
+                    }}
+                    onClick={handleSave}
+                  />
+                  <Button
+                    type="upload"
+                    icon={"load"}
+                    size="small"
+                    onFileUpload={handleFileUpload}
+                  />
+
+                  <div>
+                    <ExploreDropdown
+                      className={`${hideExploreDropdown ? styles.hide : ""}`}
+                      onClick={handleSelectTemplate}
+                    />
+                    <Button
+                      onClick={toggleExploreDropdown}
+                      icon={"explore"}
+                      size="small"
+                    />
+                  </div>
+                </div>
+                <h1
+                  contentEditable
+                  suppressContentEditableWarning
+                  onInput={haandleNameChange}
+                >
+                  {initialConfig.name}
+                </h1>
+              </div>
+              <p
+                contentEditable
+                suppressContentEditableWarning
+                onInput={haandleDescriptionChange}
+              >
+                {initialConfig.description}
+              </p>
+            </section>
+            <section className={styles.generalButtons}>
+              <Button
+                onClick={() => setIsPlaying(!isPlaying)}
+                icon={isPlaying ? "pause" : "play"}
+                size="large"
+                className={isPlaying ? globalStyles.activeButton : ""}
               />
-            );
-          })}
-        </section>
-        <Button
-          size="large"
-          className={styles.addTimer}
-          icon="plus"
-          onClick={handleAddNewTimer}
-        />
-      </div>
-    </div>
-  ) : (
-    <div>Loading...</div>
+              <Button onClick={handleReset} icon="reset" size="large" />
+              <Button
+                onClick={setMuteSound}
+                icon={isMuted ? "sound-off" : "sound-on"}
+                size="large"
+                className={isMuted ? globalStyles.activeButton : ""}
+              />
+              <Button onClick={setIsShort} icon="fold" size="large" />
+            </section>
+            <section className={`${styles.timersList} timer-list`}>
+              {config.timers.map((_, index) => {
+                return (
+                  <Timer
+                    sound={{ middle: middleSound, end: endSound }}
+                    initialConfig={initialConfig}
+                    key={`timer-${index}`}
+                    index={index}
+                    lastTimer={index === config.timers.length - 1}
+                  />
+                );
+              })}
+            </section>
+            <Button
+              size="large"
+              className={styles.addTimer}
+              icon="plus"
+              onClick={handleAddNewTimer}
+            />
+          </div>
+        </>
+      ) : (
+        <Loader />
+      )}
+    </section>
   );
 };
 

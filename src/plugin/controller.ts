@@ -5,7 +5,7 @@
 // Show UI
 let UISize = {
   width: 300,
-  height: 470
+  height: 0
 };
 figma.showUI(__html__, UISize);
 

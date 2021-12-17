@@ -1,4 +1,4 @@
-# Welcome to Timers
+# Timers for Figma
 
 ![alt text](./README-img/preview.png)
 
@@ -10,6 +10,12 @@ The plugin allows setting up multiple timers as a single flow.
 - timers mute and reordering
 - autosaving to storage after you close the plugin.
 
-### Templates
+### 🤖 [Install plugin](https://www.figma.com/community/plugin/1053689497185030696/Timers)
 
-Timers use online Github to store templates, so if you want to add your configurations, you can do it via Github and push the pull request.
+---
+
+## Templates
+
+Timers use Github to store templates, so if you want to add your configurations, you can do it via Github and create a pull request.
+
+### 👉 [Templates branch](https://github.com/PavelLaptev/figma-timers/tree/configs)

@@ -87,7 +87,6 @@ const Timer = (props: TimerItemProps) => {
     if (isPlaying && nowPlaying === props.index) {
       // Play sound 5 seconds before end
       if (joinedTime === 0 && !props.lastTimer) props.sound.middle.play();
-      if (joinedTime === 3 && props.lastTimer) props.sound.end.play();
       if (joinedTime === 0 && props.lastTimer) props.sound.end.play();
 
       // if current time is not 0, next timer
