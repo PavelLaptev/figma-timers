@@ -32,7 +32,7 @@
   },
   {
     "name": "📝 Whiteboard Challange",
-    "description": "40 min exercise. The timer is broken down into parts that are worth paying attention to in order to successfully complete the task.",
+    "description": "30 min exercise. The timer is broken down into parts that are worth paying attention to in order to successfully complete the task.",
     "sound": false,
     "timers": [
       {
@@ -54,7 +54,7 @@
       {
         "name": "Assumptions / User Flow",
         "time": {
-          "minutes": 10,
+          "minutes": 5,
           "seconds": 0
         },
         "skip": false
@@ -62,7 +62,7 @@
       {
         "name": "Assumptions / Interface sketches",
         "time": {
-          "minutes": 15,
+          "minutes": 10,
           "seconds": 0
         },
         "skip": false
