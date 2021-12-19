@@ -2,14 +2,14 @@
   position: absolute;
   z-index: 99;
   right: 50%;
-  top: 50%;
-  transform: translate(50%, -50%);
+  // top: 50%;
+  transform: translate(50%, 10px);
 
   padding: 12px;
   display: flex;
   flex-direction: column;
   background-color: var(--neutral-middle-clr);
-  width: 240px;
+  width: 260px;
   border-radius: var(--radius-l);
   box-shadow: var(--shadow-m);
 
@@ -28,7 +28,7 @@
   width: 100%;
 
   color: var(--white-clr);
-  font-size: 16px;
+  font-size: 14px;
   line-height: 140%;
   font-weight: bold;
   text-decoration: none;

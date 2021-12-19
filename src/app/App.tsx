@@ -234,6 +234,7 @@ const App = ({}) => {
             }}
           >
             <Resizer />
+
             <div
               className={`${styles.dimBackground} ${
                 hideExploreDropdown ? styles.hideBackground : ""
@@ -261,15 +262,15 @@ const App = ({}) => {
                     onFileUpload={handleFileUpload}
                   />
 
-                  <div>
-                    <ExploreDropdown
-                      className={`${hideExploreDropdown ? styles.hide : ""}`}
-                      onClick={handleSelectTemplate}
-                    />
+                  <div className={styles.dropdown}>
                     <Button
                       onClick={toggleExploreDropdown}
                       icon={"explore"}
                       size="small"
+                    />
+                    <ExploreDropdown
+                      className={`${hideExploreDropdown ? styles.hide : ""}`}
+                      onClick={handleSelectTemplate}
                     />
                   </div>
                 </div>

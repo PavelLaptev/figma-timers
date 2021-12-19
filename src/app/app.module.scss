@@ -102,6 +102,10 @@
   transition: opacity 0.1s ease-in-out;
 }
 
+.dropdown {
+  z-index: 99;
+}
+
 .hideBackground {
   opacity: 0;
   height: 0;
