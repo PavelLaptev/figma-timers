@@ -1,6 +1,6 @@
 # Timers for Figma
 
-![alt text](./README-img/preview.png)
+![preview](./README-img/preview.png)
 
 The plugin allows setting up multiple timers as a single flow.
 
