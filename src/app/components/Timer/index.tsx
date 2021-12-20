@@ -2,6 +2,7 @@ import * as React from "react";
 import writeToStorage from "../../utils/writeToStorage";
 import useStore from "../../useStore";
 
+import getRange from "../../utils/getRange";
 import moveArrayItem from "../../utils/moveArrayItem";
 
 import Icon from "../Icon";
@@ -197,7 +198,7 @@ const Timer = (props: TimerItemProps) => {
   };
 
   ////////////////////////
-  ///////// SORT /////////
+  ///// SORT TIMERS //////
   ////////////////////////
 
   const moveTimerUp = () => {
@@ -214,6 +215,25 @@ const Timer = (props: TimerItemProps) => {
 
   return (
     <section className={`${styles.timer} ${isPlaying ? styles.disabled : ""}`}>
+      <div
+        className={styles.progressLine}
+        style={{
+          width: ` ${
+            props.index === nowPlaying
+              ? getRange(
+                  config.timers[props.index].time.minutes * 60 +
+                    config.timers[props.index].time.seconds,
+                  0,
+                  100,
+                  0,
+                  props.initialConfig.timers[props.index].time.minutes * 60 +
+                    props.initialConfig.timers[props.index].time.seconds
+                )
+              : 0
+          }%`
+        }}
+      />
+
       <section className={styles.header}>
         <input
           className={styles.name}

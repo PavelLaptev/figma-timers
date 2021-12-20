@@ -1,4 +1,6 @@
 .timer {
+  overflow: hidden;
+  position: relative;
   display: flex;
   flex-direction: column;
   background-color: var(--neutral-middle-clr);
@@ -109,6 +111,18 @@
   &:hover {
     opacity: 1;
   }
+}
+
+//
+
+.progressLine {
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--progressline-clr);
 }
 
 //
