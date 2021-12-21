@@ -317,7 +317,9 @@ const App = ({}) => {
             </section>
             <Button
               size="large"
-              className={styles.addTimer}
+              className={`${styles.addTimer} ${
+                isPlaying ? styles.disabled : ""
+              }`}
               icon="plus"
               onClick={handleAddNewTimer}
             />

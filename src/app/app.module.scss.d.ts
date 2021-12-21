@@ -5,6 +5,7 @@ interface CssExports {
   'app': string;
   'darkTheme': string;
   'dimBackground': string;
+  'disabled': string;
   'dropdown': string;
   'generalButtons': string;
   'header': string;

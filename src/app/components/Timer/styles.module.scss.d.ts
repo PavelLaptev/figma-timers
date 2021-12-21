@@ -8,6 +8,7 @@ interface CssExports {
   'header': string;
   'hide': string;
   'name': string;
+  'newTimer': string;
   'progressLine': string;
   'sortIcon': string;
   'time': string;
