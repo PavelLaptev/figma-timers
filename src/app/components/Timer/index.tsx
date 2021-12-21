@@ -55,8 +55,7 @@ const Timer = (props: TimerItemProps) => {
     setConfigMinutes,
     setConfigSeconds,
     setConfigTimerName,
-    setTimers,
-    resetTimers
+    setTimers
   } = useStore();
 
   ////////////////////////
@@ -86,16 +85,18 @@ const Timer = (props: TimerItemProps) => {
     // Chceck if it is playing and run only one timer
     if (isPlaying && nowPlaying === props.index) {
       // Play sound 5 seconds before end
-      if (joinedTime === 0 && !props.lastTimer) props.sound.middle.play();
-      if (joinedTime === 0 && props.lastTimer) props.sound.end.play();
 
       // if current time is not 0, next timer
       if (joinedTime === 0) {
         console.log("Timer is over");
+
+        if (!props.lastTimer) props.sound.middle.play();
+        if (props.lastTimer) props.sound.end.play();
+
         if (config.timers.length > nowPlaying + 1) {
           setNowPlaying(props.index + 1);
-        } else {
-          resetTimers(props.initialConfig.timers);
+          props.sound.middle.currentTime = 0;
+          props.sound.end.currentTime = 0;
         }
         return;
       }
@@ -213,7 +214,18 @@ const Timer = (props: TimerItemProps) => {
   ////////////////////////
 
   return (
-    <section className={`${styles.timer} ${isPlaying ? styles.disabled : ""}`}>
+    <section
+      className={`${styles.timer} ${isPlaying ? styles.disabled : ""}`}
+      style={{
+        animation: `${
+          Number(config.timers[props.index].time.minutes) * 60 +
+            Number(config.timers[props.index].time.seconds) ===
+          0
+            ? `${styles.timerEnded} 0.4s ease-in-out`
+            : "none"
+        }`
+      }}
+    >
       <section className={styles.header}>
         <input
           className={styles.name}

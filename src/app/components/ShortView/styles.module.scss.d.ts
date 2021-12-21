@@ -8,6 +8,7 @@ interface CssExports {
   'time': string;
   'time_divider': string;
   'time_item': string;
+  'timerEnded': string;
   'wrap': string;
 }
 export const cssExports: CssExports;

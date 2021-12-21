@@ -8,7 +8,6 @@ interface CssExports {
   'header': string;
   'hide': string;
   'name': string;
-  'newTimer': string;
   'progressLine': string;
   'sortIcon': string;
   'time': string;
@@ -16,6 +15,7 @@ interface CssExports {
   'time_divider': string;
   'time_input': string;
   'timer': string;
+  'timerEnded': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

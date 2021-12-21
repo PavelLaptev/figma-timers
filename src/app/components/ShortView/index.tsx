@@ -24,7 +24,9 @@ const ShortView = (props: Props) => {
   return (
     <section
       className={`${props.className} ${styles.wrap}`}
-      style={props.style}
+      style={{
+        ...props.style
+      }}
     >
       <h4 className={styles.name}>{config.timers[nowPlaying].name}</h4>
       <div className={styles.body}>

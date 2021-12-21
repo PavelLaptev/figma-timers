@@ -8,9 +8,6 @@
   padding: 12px;
   margin-bottom: 8px;
   box-shadow: var(--shadow-m);
-  animation-name: newTimer;
-  animation-duration: 0.3s;
-  animation-timing-function: ease-in-out;
 }
 
 //
@@ -141,7 +138,7 @@
 
 //
 
-@keyframes newTimer {
+@keyframes timerEnded {
   0% {
     transform: translateX(6px) rotate(4deg);
   }
@@ -149,6 +146,7 @@
     transform: translateX(-6px) rotate(-4deg);
   }
   70% {
+    opacity: 1;
     transform: translateX(4px) rotate(2deg);
   }
   100% {

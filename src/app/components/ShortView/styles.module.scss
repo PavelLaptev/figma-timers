@@ -42,3 +42,21 @@
     color: var(--white-clr);
   }
 }
+
+//
+
+@keyframes timerEnded {
+  0% {
+    transform: translateX(6px) rotate(4deg);
+  }
+  40% {
+    transform: translateX(-6px) rotate(-4deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(4px) rotate(2deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}

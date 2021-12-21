@@ -224,6 +224,7 @@ const App = ({}) => {
               display: !isShort ? "none" : "block"
             }}
           />
+
           <div
             style={{
               display: isShort ? "none" : "block"
