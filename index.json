@@ -1,142 +1,87 @@
-[
-  {
-    "name": "⏰ Welcome to Timers",
-    "description": "Use Timers when you need to divide a large task into smaller pieces and keep within the time frame of each one. Create your own timers or use templates. You can edit this text, the main name and even suggest your own timers. The plugin also has AutoSave feature. Have fun!",
-    "isMuted": false,
-    "timers": [
-      {
-        "name": "Read the description",
-        "time": {
-          "minutes": 0,
-          "seconds": 20
-        },
-        "skip": false
+{
+  "name": "⏰ Welcome to (suggestion) The Lean Canvas Timer",
+  "description": "Timers set up to help you run through Th Lean Canvas with your team. Use Timers when you need to divide a large task into smaller pieces and keep within the time frame of each one. Create your own timers or use templates. You can edit this text, the main name and even suggest your own timers. The plugin also has AutoSave feature. Have fun!",
+  "isMuted": false,
+  "timers": [
+    {
+      "name": "Read the description",
+      "time": {
+        "minutes": 0,
+        "seconds": 20
       },
-      {
-        "name": "Play around",
-        "time": {
-          "minutes": 1,
-          "seconds": 0
-        },
-        "skip": false
+      "skip": false
+    },
+    {
+      "name": "1. Problem",
+      "time": {
+        "minutes": 1,
+        "seconds": 30
       },
-      {
-        "name": "Leave a like",
-        "time": {
-          "minutes": 0,
-          "seconds": 15
-        },
-        "skip": false
-      }
-    ]
-  },
-  {
-    "name": "📝 Whiteboard Challange",
-    "description": "30 min exercise. The timer is broken down into parts that are worth paying attention to in order to successfully complete the task.",
-    "isMuted": false,
-    "timers": [
-      {
-        "name": "About / Goals / Problems",
-        "time": {
-          "minutes": 10,
-          "seconds": 0
-        },
-        "skip": false
+      "skip": false
+    },
+    {
+      "name": "2. Customer segments",
+      "time": {
+        "minutes": 1,
+        "seconds": 30
       },
-      {
-        "name": "Users / Context",
-        "time": {
-          "minutes": 5,
-          "seconds": 0
-        },
-        "skip": false
+      "skip": false
+    },
+    {
+      "name": "3. Unique Value Prop.",
+      "time": {
+        "minutes": 1,
+        "seconds": 30
       },
-      {
-        "name": "Assumptions / User Flow",
-        "time": {
-          "minutes": 5,
-          "seconds": 0
-        },
-        "skip": false
+      "skip": false
+    },
+    {
+      "name": "4. Solutions",
+      "time": {
+        "minutes": 1,
+        "seconds": 30
       },
-      {
-        "name": "Assumptions / Interface sketches",
-        "time": {
-          "minutes": 10,
-          "seconds": 0
-        },
-        "skip": false
-      }
-    ]
-  },
-  {
-    "name": "🗒 Whiteboard Challange by @sekeidesign",
-    "description": "20 min exercise by @sekeidesign. Duplicate the FigJam file https://figma.fun/tMwhXQ",
-    "isMuted": false,
-    "timers": [
-      {
-        "name": "Goals / Constraints / HMW",
-        "time": {
-          "minutes": 5,
-          "seconds": 0
-        },
-        "skip": false
+      "skip": false
+    },
+    {
+      "name": "5. Key Metric",
+      "time": {
+        "minutes": 1,
+        "seconds": 30
       },
-      {
-        "name": "Users / Pains / Wins",
-        "time": {
-          "minutes": 5,
-          "seconds": 0
-        },
-        "skip": false
+      "skip": false
+    },
+    {
+      "name": "6. Channels",
+      "time": {
+        "minutes": 1,
+        "seconds": 30
       },
-      {
-        "name": "User Flow / Sketches",
-        "time": {
-          "minutes": 10,
-          "seconds": 0
-        },
-        "skip": false
-      }
-    ]
-  },
-  {
-    "name": "🍅 Pomodoro",
-    "description": "The Pomodoro technique is a time management system that breaks down the workflow into a focus/work portion of 25 minutes and pauses between 5-15 minutes.",
-    "isMuted": false,
-    "timers": [
-      {
-        "name": "Work",
-        "time": {
-          "minutes": 25,
-          "seconds": 0
-        },
-        "skip": false
+      "skip": false
+    },
+    {
+      "name": "7. Cost structure",
+      "time": {
+        "minutes": 1,
+        "seconds": 30
       },
-      {
-        "name": "Break",
-        "time": {
-          "minutes": 10,
-          "seconds": 0
-        },
-        "skip": false
+      "skip": false
+    },
+    {
+      "name": "8. Revenue streams",
+      "time": {
+        "minutes": 1,
+        "seconds": 30
       },
-      {
-        "name": "Work",
-        "time": {
-          "minutes": 25,
-          "seconds": 0
-        },
-        "skip": false
+      "skip": false
+    },
+    {
+      "name": "9. Unfair advantage",
+      "time": {
+        "minutes": 1,
+        "seconds": 30
       },
-      {
-        "name": "Break",
-        "time": {
-          "minutes": 10,
-          "seconds": 0
-        },
-        "skip": false
-      }
-    ]
-  }
-]
+      "skip": false
+    }
+  ]
+}
